@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/screens/home/models/products_by_category_model.dart';
 
-import '../../../constants.dart';
+import 'package:shop_app/utils/constants.dart';
+
 import '../../../models/Product.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -11,7 +13,7 @@ class ProductDescription extends StatelessWidget {
     this.pressOnSeeMore,
   }) : super(key: key);
 
-  final Product product;
+  final GetAllProductsByCategory product;
   final GestureTapCallback? pressOnSeeMore;
 
   @override
@@ -22,7 +24,8 @@ class ProductDescription extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            product.title,
+            product.name,
+            textAlign: TextAlign.end,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
@@ -31,22 +34,17 @@ class ProductDescription extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             width: 48,
-            decoration: BoxDecoration(
-              color: product.isFavourite
-                  ? const Color(0xFFFFE6E6)
-                  : const Color(0xFFF5F6F9),
-              borderRadius: const BorderRadius.only(
+            decoration: const BoxDecoration(
+              color: Color(0xFFF5F6F9),
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomLeft: Radius.circular(20),
               ),
             ),
             child: SvgPicture.asset(
               "assets/icons/Heart Icon_2.svg",
-              colorFilter: ColorFilter.mode(
-                  product.isFavourite
-                      ? const Color(0xFFFF4848)
-                      : const Color(0xFFDBDEE4),
-                  BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(Color(0xFFDBDEE4), BlendMode.srcIn),
               height: 16,
             ),
           ),

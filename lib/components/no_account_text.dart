@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/utils/constants.dart';
 
-import '../constants.dart';
 import '../screens/sign_up/sign_up_screen.dart';
 
 class NoAccountText extends StatelessWidget {
@@ -14,13 +14,13 @@ class NoAccountText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          "Don’t have an account? ",
+          "looking for guest login? ",
           style: TextStyle(fontSize: 16),
         ),
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
           child: const Text(
-            "Sign Up",
+            "Skip login",
             style: TextStyle(fontSize: 16, color: kPrimaryColor),
           ),
         ),

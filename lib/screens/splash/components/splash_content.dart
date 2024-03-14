@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import 'package:shop_app/utils/image_class.dart';
 
 class SplashContent extends StatefulWidget {
   const SplashContent({
@@ -20,13 +20,15 @@ class _SplashContentState extends State<SplashContent> {
     return Column(
       children: <Widget>[
         const Spacer(),
-        const Text(
-          "TOKOTO",
-          style: TextStyle(
-            fontSize: 32,
-            color: kPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
+        const SizedBox(
+          height: 10,
+        ),
+        Image.asset(
+          ImageClass.appIcon,
+          height: 100,
+        ),
+        const SizedBox(
+          height: 10,
         ),
         Text(
           widget.text!,

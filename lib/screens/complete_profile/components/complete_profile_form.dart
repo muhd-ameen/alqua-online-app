@@ -1,8 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
-import '../../../constants.dart';
+import 'package:shop_app/utils/constants.dart';
 import '../../otp/otp_screen.dart';
 
 class CompleteProfileForm extends StatefulWidget {

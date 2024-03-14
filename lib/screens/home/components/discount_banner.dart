@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/utils/color_class.dart';
 
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({
@@ -17,8 +18,8 @@ class DiscountBanner extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF4A3298),
-            Color(0xFF8A275A),
+            ColorClass.primaryGradientColor2,
+            ColorClass.primaryGradientColor1,
           ],
         ),
         color: const Color(0xff3cebbc),

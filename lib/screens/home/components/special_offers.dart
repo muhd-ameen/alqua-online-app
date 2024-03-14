@@ -36,8 +36,14 @@ class SpecialOffers extends StatelessWidget {
                                   category: e.name ?? "",
                                   numOfBrands: 18,
                                   press: () {
-                                    Navigator.pushNamed(
-                                        context, ProductsScreen.routeName);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProductsScreen(
+                                          categoryId: e.id!,
+                                        ),
+                                      ),
+                                    );
                                   },
                                 ),
                         )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/utils/color_class.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -7,11 +8,11 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Flash Deal"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "Bill"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "Game"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "Daily Gift"},
-      {"icon": "assets/icons/Discover.svg", "text": "More"},
+      {"icon": "assets/icons/Flash Icon.svg", "text": "صفقة فلاش"},
+      {"icon": "assets/icons/Bill Icon.svg", "text": "فاتورة"},
+      {"icon": "assets/icons/Game Icon.svg", "text": "لعبة"},
+      {"icon": "assets/icons/Gift Icon.svg", "text": "هدية يومية"},
+      {"icon": "assets/icons/Discover.svg", "text": "أكثر"},
     ];
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -53,12 +54,16 @@ class CategoryCard extends StatelessWidget {
             height: 56,
             width: 56,
             decoration: BoxDecoration(
-              color: const Color(0xFFFFECDF),
+              color: ColorClass.primaryGradientColor2.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: SvgPicture.asset(icon),
+            child: SvgPicture.asset(
+              icon,
+              // ignore: deprecated_member_use
+              color: ColorClass.kPrimaryColor,
+            ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(text, textAlign: TextAlign.center)
         ],
       ),

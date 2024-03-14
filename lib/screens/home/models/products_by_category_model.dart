@@ -1,71 +1,71 @@
 // To parse this JSON data, do
 //
-//     final getAllProducts = getAllProductsFromJson(jsonString);
+//     final getAllProductsByCategory = getAllProductsByCategoryFromJson(jsonString);
 
 import 'dart:convert';
 
-List<GetAllProducts> getAllProductsFromJson(String str) =>
-    List<GetAllProducts>.from(
-        json.decode(str).map((x) => GetAllProducts.fromJson(x)));
+List<GetAllProductsByCategory> getAllProductsByCategoryFromJson(String str) =>
+    List<GetAllProductsByCategory>.from(
+        json.decode(str).map((x) => GetAllProductsByCategory.fromJson(x)));
 
-String getAllProductsToJson(List<GetAllProducts> data) =>
+String getAllProductsByCategoryToJson(List<GetAllProductsByCategory> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class GetAllProducts {
-  final int? id;
-  final String? name;
-  final String? slug;
-  final String? permalink;
-  final DateTime? dateCreated;
-  final DateTime? dateCreatedGmt;
-  final DateTime? dateModified;
-  final DateTime? dateModifiedGmt;
-  final String? type;
-  final String? status;
+class GetAllProductsByCategory {
+  final int id;
+  final String name;
+  final String slug;
+  final String permalink;
+  final DateTime dateCreated;
+  final DateTime dateCreatedGmt;
+  final DateTime dateModified;
+  final DateTime dateModifiedGmt;
+  final String type;
+  final String status;
   final bool featured;
-  final String? catalogVisibility;
-  final String? description;
-  final String? shortDescription;
-  final String? sku;
-  final String? price;
-  final String? regularPrice;
-  final String? salePrice;
+  final String catalogVisibility;
+  final String description;
+  final String shortDescription;
+  final String sku;
+  final String price;
+  final String regularPrice;
+  final String salePrice;
   final dynamic dateOnSaleFrom;
   final dynamic dateOnSaleFromGmt;
   final dynamic dateOnSaleTo;
   final dynamic dateOnSaleToGmt;
   final bool onSale;
   final bool purchasable;
-  final int? totalSales;
+  final int totalSales;
   final bool virtual;
   final bool downloadable;
   final List<dynamic> downloads;
-  final int? downloadLimit;
-  final int? downloadExpiry;
-  final String? externalUrl;
-  final String? buttonText;
-  final String? taxStatus;
-  final String? taxClass;
+  final int downloadLimit;
+  final int downloadExpiry;
+  final String externalUrl;
+  final String buttonText;
+  final String taxStatus;
+  final String taxClass;
   final bool manageStock;
   final dynamic stockQuantity;
-  final String? backorders;
+  final String backorders;
   final bool backordersAllowed;
   final bool backordered;
   final dynamic lowStockAmount;
   final bool soldIndividually;
-  final String? weight;
-  final Dimensions? dimensions;
+  final String weight;
+  final Dimensions dimensions;
   final bool shippingRequired;
   final bool shippingTaxable;
-  final String? shippingClass;
-  final int? shippingClassId;
+  final String shippingClass;
+  final int shippingClassId;
   final bool reviewsAllowed;
-  final String? averageRating;
-  final int? ratingCount;
+  final String averageRating;
+  final int ratingCount;
   final List<dynamic> upsellIds;
   final List<dynamic> crossSellIds;
-  final int? parentId;
-  final String? purchaseNote;
+  final int parentId;
+  final String purchaseNote;
   final List<Category> categories;
   final List<dynamic> tags;
   final List<ImageList> images;
@@ -73,16 +73,16 @@ class GetAllProducts {
   final List<dynamic> defaultAttributes;
   final List<dynamic> variations;
   final List<dynamic> groupedProducts;
-  final int? menuOrder;
-  final String? priceHtml;
+  final int menuOrder;
+  final String priceHtml;
   final List<int> relatedIds;
   final List<dynamic> metaData;
-  final String? stockStatus;
+  final String stockStatus;
   final bool hasOptions;
-  final String? postPassword;
-  final Links? links;
+  final String postPassword;
+  final Links links;
 
-  GetAllProducts({
+  GetAllProductsByCategory({
     required this.id,
     required this.name,
     required this.slug,
@@ -154,7 +154,8 @@ class GetAllProducts {
     required this.links,
   });
 
-  factory GetAllProducts.fromJson(Map<String, dynamic> json) => GetAllProducts(
+  factory GetAllProductsByCategory.fromJson(Map<String, dynamic> json) =>
+      GetAllProductsByCategory(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],
@@ -235,10 +236,10 @@ class GetAllProducts {
         "name": name,
         "slug": slug,
         "permalink": permalink,
-        "date_created": dateCreated!.toIso8601String(),
-        "date_created_gmt": dateCreatedGmt!.toIso8601String(),
-        "date_modified": dateModified!.toIso8601String(),
-        "date_modified_gmt": dateModifiedGmt!.toIso8601String(),
+        "date_created": dateCreated.toIso8601String(),
+        "date_created_gmt": dateCreatedGmt.toIso8601String(),
+        "date_modified": dateModified.toIso8601String(),
+        "date_modified_gmt": dateModifiedGmt.toIso8601String(),
         "type": type,
         "status": status,
         "featured": featured,
@@ -273,7 +274,7 @@ class GetAllProducts {
         "low_stock_amount": lowStockAmount,
         "sold_individually": soldIndividually,
         "weight": weight,
-        "dimensions": dimensions!.toJson(),
+        "dimensions": dimensions.toJson(),
         "shipping_required": shippingRequired,
         "shipping_taxable": shippingTaxable,
         "shipping_class": shippingClass,
@@ -300,14 +301,14 @@ class GetAllProducts {
         "stock_status": stockStatus,
         "has_options": hasOptions,
         "post_password": postPassword,
-        "_links": links!.toJson(),
+        "_links": links.toJson(),
       };
 }
 
 class Category {
-  final int? id;
-  final String? name;
-  final String? slug;
+  final int id;
+  final String name;
+  final String slug;
 
   Category({
     required this.id,
@@ -329,9 +330,9 @@ class Category {
 }
 
 class Dimensions {
-  final String? length;
-  final String? width;
-  final String? height;
+  final String length;
+  final String width;
+  final String height;
 
   Dimensions({
     required this.length,
@@ -353,14 +354,14 @@ class Dimensions {
 }
 
 class ImageList {
-  final int? id;
-  final DateTime? dateCreated;
-  final DateTime? dateCreatedGmt;
-  final DateTime? dateModified;
-  final DateTime? dateModifiedGmt;
-  final String? src;
-  final String? name;
-  final String? alt;
+  final int id;
+  final DateTime dateCreated;
+  final DateTime dateCreatedGmt;
+  final DateTime dateModified;
+  final DateTime dateModifiedGmt;
+  final String src;
+  final String name;
+  final String alt;
 
   ImageList({
     required this.id,
@@ -386,10 +387,10 @@ class ImageList {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "date_created": dateCreated!.toIso8601String(),
-        "date_created_gmt": dateCreatedGmt!.toIso8601String(),
-        "date_modified": dateModified!.toIso8601String(),
-        "date_modified_gmt": dateModifiedGmt!.toIso8601String(),
+        "date_created": dateCreated.toIso8601String(),
+        "date_created_gmt": dateCreatedGmt.toIso8601String(),
+        "date_modified": dateModified.toIso8601String(),
+        "date_modified_gmt": dateModifiedGmt.toIso8601String(),
         "src": src,
         "name": name,
         "alt": alt,
@@ -419,7 +420,7 @@ class Links {
 }
 
 class Collection {
-  final String? href;
+  final String href;
 
   Collection({
     required this.href,

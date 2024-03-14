@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/custom_surfix_icon.dart';
-import '../../../components/form_error.dart';
-import '../../../constants.dart';
+
 import '../../../helper/keyboard.dart';
-import '../../forgot_password/forgot_password_screen.dart';
 import '../../login_success/login_success_screen.dart';
 
 class SignForm extends StatefulWidget {
@@ -44,93 +42,95 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            controller: TextEditingController()..text = "user@alqua.online",
+            keyboardType: TextInputType.phone,
+            // controller: TextEditingController()..text = "user@alqua.online",
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kEmailNullError);
-              } else if (emailValidatorRegExp.hasMatch(value)) {
-                removeError(error: kInvalidEmailError);
-              }
-              return;
+              // if (value.isNotEmpty) {
+              //   removeError(error: kEmailNullError);
+              // } else if (emailValidatorRegExp.hasMatch(value)) {
+              //   removeError(error: kInvalidEmailError);
+              // }
+              // return;
             },
             validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kEmailNullError);
-                return "";
-              } else if (!emailValidatorRegExp.hasMatch(value)) {
-                addError(error: kInvalidEmailError);
-                return "";
-              }
               return null;
+
+              // if (value!.isEmpty) {
+              //   addError(error: kEmailNullError);
+              //   return "";
+              // } else if (!emailValidatorRegExp.hasMatch(value)) {
+              //   addError(error: kInvalidEmailError);
+              //   return "";
+              // }
+              // return null;
             },
             decoration: const InputDecoration(
-              labelText: "Email",
-              hintText: "Enter your email",
+              labelText: "Phone Number",
+              hintText: "Please enter phone number",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
             ),
           ),
-          const SizedBox(height: 20),
-          TextFormField(
-            controller: TextEditingController()..text = "user@alqua.online",
-            obscureText: true,
-            onSaved: (newValue) => password = newValue,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kPassNullError);
-              } else if (value.length >= 8) {
-                removeError(error: kShortPassError);
-              }
-              return;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kPassNullError);
-                return "";
-              } else if (value.length < 8) {
-                addError(error: kShortPassError);
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              labelText: "Password",
-              hintText: "Enter your password",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Checkbox(
-                value: remember,
-                activeColor: kPrimaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    remember = value;
-                  });
-                },
-              ),
-              const Text("Remember me"),
-              const Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
-                child: const Text(
-                  "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              )
-            ],
-          ),
-          FormError(errors: errors),
+          // const SizedBox(height: 20),
+          // TextFormField(
+          //   controller: TextEditingController()..text = "user@alqua.online",
+          //   obscureText: true,
+          //   onSaved: (newValue) => password = newValue,
+          //   onChanged: (value) {
+          //     if (value.isNotEmpty) {
+          //       removeError(error: kPassNullError);
+          //     } else if (value.length >= 8) {
+          //       removeError(error: kShortPassError);
+          //     }
+          //     return;
+          //   },
+          //   validator: (value) {
+          //     if (value!.isEmpty) {
+          //       addError(error: kPassNullError);
+          //       return "";
+          //     } else if (value.length < 8) {
+          //       addError(error: kShortPassError);
+          //       return "";
+          //     }
+          //     return null;
+          //   },
+          //   decoration: const InputDecoration(
+          //     labelText: "Password",
+          //     hintText: "Enter your password",
+          //     // If  you are using latest version of flutter then lable text and hint text shown like this
+          //     // if you r using flutter less then 1.20.* then maybe this is not working properly
+          //     floatingLabelBehavior: FloatingLabelBehavior.always,
+          //     suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+          //   ),
+          // ),
+          // const SizedBox(height: 20),
+          // Row(
+          //   children: [
+          //     Checkbox(
+          //       value: remember,
+          //       activeColor: kPrimaryColor,
+          //       onChanged: (value) {
+          //         setState(() {
+          //           remember = value;
+          //         });
+          //       },
+          //     ),
+          //     const Text("Remember me"),
+          //     const Spacer(),
+          //     GestureDetector(
+          //       onTap: () => Navigator.pushNamed(
+          //           context, ForgotPasswordScreen.routeName),
+          //       child: const Text(
+          //         "Forgot Password",
+          //         style: TextStyle(decoration: TextDecoration.underline),
+          //       ),
+          //     )
+          //   ],
+          // ),
+          // FormError(errors: errors),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {

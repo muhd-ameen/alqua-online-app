@@ -20,9 +20,7 @@ class PopularProducts extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SectionTitle(
               title: "المنتجات الشعبية",
-              press: () {
-                Navigator.pushNamed(context, ProductsScreen.routeName);
-              },
+              press: () {},
             ),
           ),
           SingleChildScrollView(
@@ -36,13 +34,15 @@ class PopularProducts extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: DynamicProductCard(
-                          product:  snapshot.allProducts[index],
-                          onPress: () => Navigator.pushNamed(
-                            context,
-                            DetailsScreen.routeName,
-                            arguments: ProductDetailsArguments(
-                                product: demoProducts[index]),
-                          ),
+                          product: snapshot.allProducts[index],
+                          onPress: () {
+                            //   Navigator.pushNamed(
+                            //   context,
+                            //   DetailsScreen.routeName,
+                            //   arguments: ProductDetailsArguments(
+                            //       product: snapshot.allProducts[index]),
+                            // );
+                          },
                         ),
                       );
                     }

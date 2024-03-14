@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/home/models/products_by_category_model.dart';
 
-import '../../../constants.dart';
+import 'package:shop_app/utils/constants.dart';
+
 import '../../../models/Product.dart';
 
 class ProductImages extends StatefulWidget {
@@ -9,7 +11,7 @@ class ProductImages extends StatefulWidget {
     required this.product,
   }) : super(key: key);
 
-  final Product product;
+  final GetAllProductsByCategory product;
 
   @override
   _ProductImagesState createState() => _ProductImagesState();
@@ -25,7 +27,7 @@ class _ProductImagesState extends State<ProductImages> {
           width: 238,
           child: AspectRatio(
             aspectRatio: 1,
-            child: Image.asset(widget.product.images[selectedImage]),
+            child: Image.network(widget.product.images[selectedImage].src),
           ),
         ),
         // SizedBox(height: 20),
@@ -41,7 +43,7 @@ class _ProductImagesState extends State<ProductImages> {
                     selectedImage = index;
                   });
                 },
-                image: widget.product.images[index],
+                image: widget.product.images[index].src,
               ),
             ),
           ],
@@ -83,7 +85,7 @@ class _SmallProductImageState extends State<SmallProductImage> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(widget.isSelected ? 1 : 0)),
         ),
-        child: Image.asset(widget.image),
+        child: Image.network(widget.image),
       ),
     );
   }

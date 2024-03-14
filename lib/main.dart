@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 
-import 'routes.dart';
-import 'theme.dart';
+import 'utils/routes.dart';
+import 'utils/theme.dart';
 
 void main() {
   runApp(const MyApp());

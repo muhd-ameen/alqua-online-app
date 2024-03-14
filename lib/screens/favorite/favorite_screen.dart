@@ -29,12 +29,14 @@ class FavoriteScreen extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => ProductCard(
                   product: demoProducts[index],
-                  onPress: () => Navigator.pushNamed(
-                    context,
-                    DetailsScreen.routeName,
-                    arguments:
-                        ProductDetailsArguments(product: demoProducts[index]),
-                  ),
+                  onPress: () {
+                  //   Navigator.pushNamed(
+                  //   context,
+                  //   DetailsScreen.routeName,
+                  //   arguments:
+                  //       ProductDetailsArguments(product: demoProducts[index]),
+                  // );
+                  },
                 ),
               ),
             ),
