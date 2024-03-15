@@ -4,8 +4,6 @@ import 'package:shop_app/screens/home/models/products_by_category_model.dart';
 import 'package:shop_app/screens/home/models/products_model.dart';
 import 'package:shop_app/utils/constants.dart';
 
-import '../models/Product.dart';
-
 class ProductByCategoryCard extends StatelessWidget {
   const ProductByCategoryCard({
     Key? key,
@@ -94,7 +92,7 @@ class ProductCard extends StatelessWidget {
   }) : super(key: key);
 
   final double width, aspectRetio;
-  final Product product;
+  final GetAllProducts product;
   final VoidCallback onPress;
 
   @override
@@ -107,19 +105,19 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
-              aspectRatio: 1.02,
+              aspectRatio: 1.03,
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: kSecondaryColor.withOpacity(0.1),
+                  border: Border.all(color: kSecondaryColor.withOpacity(0.1)),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.asset(product.images[0]),
+                child: Image.network(product.images[0].src!),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              product.title,
+              product.name ?? "",
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 2,
             ),
@@ -139,21 +137,16 @@ class ProductCard extends StatelessWidget {
                   onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.all(6),
-                    height: 24,
-                    width: 24,
+                    height: 20,
+                    width: 20,
                     decoration: BoxDecoration(
-                      color: product.isFavourite
-                          ? kPrimaryColor.withOpacity(0.15)
-                          : kSecondaryColor.withOpacity(0.1),
+                      color: kSecondaryColor.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/Heart Icon_2.svg",
-                      colorFilter: ColorFilter.mode(
-                          product.isFavourite
-                              ? const Color(0xFFFF4848)
-                              : const Color(0xFFDBDEE4),
-                          BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(
+                          Color(0xFFDBDEE4), BlendMode.srcIn),
                     ),
                   ),
                 ),

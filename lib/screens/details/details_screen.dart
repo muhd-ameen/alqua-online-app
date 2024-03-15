@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/home/models/products_by_category_model.dart';
+import 'package:shop_app/screens/home/models/products_model.dart';
 
 import '../../models/Product.dart';
 import 'components/color_dots.dart';
@@ -121,4 +122,10 @@ class ProductDetailsArguments {
   final GetAllProductsByCategory product;
 
   ProductDetailsArguments({required this.product});
+}
+
+class ProductDetailsArguments2 {
+  final GetAllProducts product;
+
+  ProductDetailsArguments2({required this.product});
 }

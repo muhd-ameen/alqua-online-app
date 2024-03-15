@@ -32,7 +32,9 @@ class SpecialOffers extends StatelessWidget {
                           (e) => e.name == "Uncategorized"
                               ? const SizedBox.shrink()
                               : SpecialOfferCard(
-                                  image: e.image!.src!,
+                                  image: e.image == null
+                                      ? "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg"
+                                      : e.image!.src!,
                                   category: e.name ?? "",
                                   numOfBrands: 18,
                                   press: () {
@@ -113,11 +115,11 @@ class SpecialOfferCard extends StatelessWidget {
                         TextSpan(
                           text: "$category\n",
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
+                        // TextSpan(text: "$numOfBrands Brands")
                       ],
                     ),
                   ),

@@ -10,6 +10,8 @@ class ApiSupport {
   static String productsByCategory({required int categoryId}) {
     return "products?category=$categoryId";
   }
+
+  static String searchProduct({required String searchTxt}) {
+    return "products?search=$searchTxt";
+  }
 }
-
-

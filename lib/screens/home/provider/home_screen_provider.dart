@@ -9,6 +9,8 @@ import 'package:shop_app/screens/home/models/category_model.dart';
 import 'package:shop_app/screens/home/models/products_model.dart';
 
 class HomeProvider with ChangeNotifier {
+  /// Get all categories
+
   bool getAllCategoriesLoading = false;
 
   List<GetAllCategories> allCategories = [];
@@ -41,6 +43,7 @@ class HomeProvider with ChangeNotifier {
     return null;
   }
 
+  /// Get all products
   bool getAllProductsLoading = false;
 
   List<GetAllProducts> allProducts = [];
@@ -73,14 +76,15 @@ class HomeProvider with ChangeNotifier {
     return null;
   }
 
+  /// Get all products by category
   bool getAllProductsByCategoryLoading = false;
 
   List<GetAllProductsByCategory> allProductsByCategory = [];
 
   Future<GetAllProducts?> getAllProductsByCategory(int categoryId) async {
     getAllProductsByCategoryLoading = true;
-    var url = Uri.parse(
-        ApiSupport.baseUrl + ApiSupport.productsByCategory(categoryId: categoryId));
+    var url = Uri.parse(ApiSupport.baseUrl +
+        ApiSupport.productsByCategory(categoryId: categoryId));
     var headers = {
       'Authorization':
           'Basic ${base64Encode(utf8.encode('${ApiSupport.consumerKey}:${ApiSupport.consumerSecret}'))}',
@@ -97,6 +101,46 @@ class HomeProvider with ChangeNotifier {
       notifyListeners();
     } else {
       getAllProductsByCategoryLoading = false;
+      log('Request failed with status: ${response.statusCode}.');
+      notifyListeners();
+    }
+
+    notifyListeners();
+
+    return null;
+  }
+
+  /// Search products
+  bool searchProductsLoading = false;
+
+  List<GetAllProducts> searchProductList = [];
+
+  ///clear search list
+  void clearSearchList() {
+    searchProductList = [];
+    notifyListeners();
+  }
+
+  Future<GetAllProducts?> searchProducts(String searchTxt) async {
+    getAllProductsLoading = true;
+    var url = Uri.parse(
+        ApiSupport.baseUrl + ApiSupport.searchProduct(searchTxt: searchTxt));
+    var headers = {
+      'Authorization':
+          'Basic ${base64Encode(utf8.encode('${ApiSupport.consumerKey}:${ApiSupport.consumerSecret}'))}',
+    };
+
+    Response response = await http.get(url, headers: headers);
+
+    log(url.toString());
+    log(response.body);
+    if (response.statusCode == 200) {
+      searchProductList = getAllProductsFromJson(response.body);
+      getAllProductsLoading = false;
+
+      notifyListeners();
+    } else {
+      getAllProductsLoading = false;
       log('Request failed with status: ${response.statusCode}.');
       notifyListeners();
     }
