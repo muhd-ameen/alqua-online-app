@@ -3,12 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:shop_app/screens/home/models/products_by_category_model.dart';
 import 'package:shop_app/utils/api_support.dart';
 import 'package:shop_app/screens/home/models/category_model.dart';
 import 'package:shop_app/screens/home/models/products_model.dart';
 
-class HomeProvider with ChangeNotifier {
+class HomeProvider extends ChangeNotifier {
   /// Get all categories
 
   bool getAllCategoriesLoading = false;
@@ -79,7 +78,7 @@ class HomeProvider with ChangeNotifier {
   /// Get all products by category
   bool getAllProductsByCategoryLoading = false;
 
-  List<GetAllProductsByCategory> allProductsByCategory = [];
+  List<GetAllProducts> allProductsByCategory = [];
 
   Future<GetAllProducts?> getAllProductsByCategory(int categoryId) async {
     getAllProductsByCategoryLoading = true;
@@ -95,7 +94,7 @@ class HomeProvider with ChangeNotifier {
     log(url.toString());
     log(response.body);
     if (response.statusCode == 200) {
-      allProductsByCategory = getAllProductsByCategoryFromJson(response.body);
+      allProductsByCategory = getAllProductsFromJson(response.body);
       getAllProductsByCategoryLoading = false;
 
       notifyListeners();

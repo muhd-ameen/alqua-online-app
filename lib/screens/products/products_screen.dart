@@ -49,11 +49,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         ),
                         itemBuilder: (context, index) => ProductByCategoryCard(
                           product: snapshot.allProductsByCategory[index],
-                          onPress: () => Navigator.pushNamed(
+                          onPress: () => Navigator.push(
                             context,
-                            DetailsScreen.routeName,
-                            arguments: ProductDetailsArguments(
-                                product: snapshot.allProductsByCategory[index]),
+                            MaterialPageRoute(
+                              builder: (context) => DetailsScreen(
+                                product: snapshot.allProductsByCategory[index],
+                              ),
+                            ),
                           ),
                         ),
                       ),

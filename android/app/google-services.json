@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "41289264982",
+    "project_id": "souq-alqua",
+    "storage_bucket": "souq-alqua.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41289264982:android:16bfdf8725f2e2d84970f7",
+        "android_client_info": {
+          "package_name": "com.example.demo_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtXZqXhU5nLHnbZS37hs843hQ7ct2lMtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

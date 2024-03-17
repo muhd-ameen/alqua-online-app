@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/home/models/products_by_category_model.dart';
+import 'package:shop_app/screens/home/models/products_model.dart';
 
 import 'package:shop_app/utils/constants.dart';
 
-import '../../../models/Product.dart';
 
 class ProductImages extends StatefulWidget {
   const ProductImages({
@@ -11,9 +10,10 @@ class ProductImages extends StatefulWidget {
     required this.product,
   }) : super(key: key);
 
-  final GetAllProductsByCategory product;
+  final GetAllProducts product;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProductImagesState createState() => _ProductImagesState();
 }
 
@@ -27,7 +27,9 @@ class _ProductImagesState extends State<ProductImages> {
           width: 238,
           child: AspectRatio(
             aspectRatio: 1,
-            child: Image.network(widget.product.images[selectedImage].src),
+            child: Image.network(widget.product.images.isEmpty
+                ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
+                : widget.product.images[selectedImage].src!),
           ),
         ),
         // SizedBox(height: 20),
@@ -43,7 +45,11 @@ class _ProductImagesState extends State<ProductImages> {
                     selectedImage = index;
                   });
                 },
-                image: widget.product.images[index].src,
+                image:
+                widget.product.images.isEmpty
+                    ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
+                    :
+                 widget.product.images[index].src!,
               ),
             ),
           ],

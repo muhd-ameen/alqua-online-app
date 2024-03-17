@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/utils/constants.dart';
-
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
@@ -10,6 +10,8 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 16,
@@ -60,22 +62,50 @@ class CheckoutCard extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(
-                  child: Text.rich(
-                    TextSpan(
-                      text: "Total:\n",
-                      children: [
-                        TextSpan(
-                          text: "\$337.15",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // const Expanded(
+                //   child: Text.rich(
+                //     // TextSpan(
+                //     //   text: "Total:\n",
+                //     //   children: [
+                //     //     TextSpan(
+                //     //       text: "\$337.15",
+                //     //       style: TextStyle(fontSize: 16, color: Colors.black),
+                //     //     ),
+                //     //   ],
+                //     // ),
+                //   ),
+                // ),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      /// add cart items to user phoneNumber doc inside orders collection  and clear the cart
+                      _firestore.collection('orders').doc("971506375561").set({
+                        'products': [
+                          {
+                            'name': 'Product Name',
+                            'image': 'https://via.placeholder.com/150',
+                            'qty': 1,
+                            'productId': '0'
+                          },
+                          {
+                            'name': 'Product Name',
+                            'image': 'https://via.placeholder.com/150',
+                            'qty': 1,
+                            'productId': '1',
+                          },
+                          {
+                            'name': 'Product Name',
+                            'image': 'https://via.placeholder.com/150',
+                            'qty': 3,
+                            'productId': '2',
+                          }
+                        ]
+                      });
+                      // `_firestore
+                      //     .collection('cart')
+                      //     .doc("971506375562")
+                      //     .update({'products': []});`
+                    },
                     child: const Text("Check Out"),
                   ),
                 ),

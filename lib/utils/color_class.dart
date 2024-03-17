@@ -5,4 +5,5 @@ class ColorClass {
   static const Color kSecondayColor = Color(0xFFffffff);
   static const Color primaryGradientColor1 = Color(0xff1a73bc);
   static const Color primaryGradientColor2 = Color(0xff58d6e2);
+  static const Color grayColor = Color(0xFF9A9A9A);
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_app/screens/home/models/products_by_category_model.dart';
 import 'package:shop_app/screens/home/models/products_model.dart';
 import 'package:shop_app/utils/constants.dart';
 
@@ -14,7 +13,7 @@ class ProductByCategoryCard extends StatelessWidget {
   }) : super(key: key);
 
   final double width, aspectRetio;
-  final GetAllProductsByCategory product;
+  final GetAllProducts product;
   final VoidCallback onPress;
 
   @override
@@ -34,12 +33,14 @@ class ProductByCategoryCard extends StatelessWidget {
                   color: kSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(product.images[0].src),
+                child: Image.network(product.images.isEmpty
+                    ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
+                    : product.images[0].src!),
               ),
             ),
             const SizedBox(height: 3),
             Text(
-              product.name,
+              product.name ?? "",
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.end,
               maxLines: 2,
@@ -112,7 +113,9 @@ class ProductCard extends StatelessWidget {
                   border: Border.all(color: kSecondaryColor.withOpacity(0.1)),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(product.images[0].src!),
+                child: Image.network(product.images.isEmpty
+                    ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
+                    : product.images[0].src!),
               ),
             ),
             const SizedBox(height: 8),
@@ -191,7 +194,10 @@ class DynamicProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Image.network(
-                  product.images.first.src ?? "",
+                  product.images.isEmpty
+                      ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
+                      : product.images.first.src ??
+                          "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png",
                   fit: BoxFit.cover,
                 ),
               ),

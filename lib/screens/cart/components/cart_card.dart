@@ -13,7 +13,8 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return
+     Row(
       children: [
         SizedBox(
           width: 88,

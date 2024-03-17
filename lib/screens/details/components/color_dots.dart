@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/home/models/products_model.dart';
 
 import '../../../components/rounded_icon_btn.dart';
 import 'package:shop_app/utils/constants.dart';
 
-import '../../../models/Product.dart';
-import '../../home/models/products_by_category_model.dart';
 
 class ColorDots extends StatelessWidget {
   const ColorDots({
@@ -12,12 +11,11 @@ class ColorDots extends StatelessWidget {
     required this.product,
   }) : super(key: key);
 
-  final GetAllProductsByCategory product;
+  final GetAllProducts product;
 
   @override
   Widget build(BuildContext context) {
     // Now this is fixed and only for demo
-    int selectedColor = 3;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(

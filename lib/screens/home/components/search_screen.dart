@@ -72,16 +72,18 @@ class _SearchProductsScreenState extends State<SearchProductsScreen> {
                       ),
                       itemBuilder: (context, index) => ProductCard(
                         product: snapshot.searchProductList[index],
-                        onPress: () => Navigator.pushNamed(
+                        onPress: () => Navigator.push(
                           context,
-                          DetailsScreen.routeName,
-                          arguments: ProductDetailsArguments2(
-                              product: snapshot.searchProductList[index]),
-                        ),
+                          MaterialPageRoute(
+                            builder: (context) => DetailsScreen(
+                              product: snapshot.searchProductList[index],
+                            ),
+                          ),
                       ),
                     ),
                   ),
                 ),
+              ),
               ],
             ),
           ),
