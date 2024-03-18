@@ -109,17 +109,27 @@ class _DetailsScreenState extends State<DetailsScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: ElevatedButton(
-              onPressed: () {
-                // add to cart functionality
-                _firestore
+              onPressed: () async {
+                // add to cart functionality with if the product already exit in the cart then increase the quality
+                DocumentSnapshot cartSnapshot = await _firestore
                     .collection('cart')
                     .doc("971506375562")
-                    .get()
-                    .then((value) {
-                  if (value.exists) {
-                    Map<String, dynamic> cartData =
-                        value.data() as Map<String, dynamic>;
-                    List<dynamic> products = cartData['products'] ?? [];
+                    .get();
+
+                if (cartSnapshot.exists) {
+                  Map<String, dynamic> cartData =
+                      cartSnapshot.data() as Map<String, dynamic>;
+                  List<dynamic> products = cartData['products'] ?? [];
+
+                  // Check if the product already exists in the cart
+                  int existingProductIndex = products.indexWhere(
+                      (product) => product['productId'] == widget.product.id);
+
+                  if (existingProductIndex != -1) {
+                    // If the product exists, increment its quantity
+                    products[existingProductIndex]['qty'] += 1;
+                  } else {
+                    // If the product doesn't exist, add it to the cart with quantity 1
                     products.add({
                       'name': widget.product.name,
                       'image': widget.product.images.isEmpty
@@ -128,31 +138,37 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       'qty': 1,
                       'productId': widget.product.id,
                     });
-                    _firestore
-                        .collection('cart')
-                        .doc("971506375562")
-                        .update({'products': products});
-                  } else {
-                    _firestore.collection('cart').doc("971506375562").set({
-                      'products': [
-                        {
-                          'name': widget.product.name,
-                          'image': widget.product.images.isEmpty
-                              ? "https://via.placeholder.com/150"
-                              : widget.product.images[0].src,
-                          'qty': 1,
-                          'productId': widget.product.id,
-                        }
-                      ]
-                    });
                   }
-                });
-                // Navigator.pushNamed(context, CartScreen.routeName);
+
+                  // Update the cart in Firestore
+                  await _firestore
+                      .collection('cart')
+                      .doc("971506375562")
+                      .update({'products': products});
+                } else {
+                  // If the cart doesn't exist, create a new cart with the product
+                  await _firestore.collection('cart').doc("971506375562").set({
+                    'products': [
+                      {
+                        'name': widget.product.name,
+                        'image': widget.product.images.isEmpty
+                            ? "https://via.placeholder.com/150"
+                            : widget.product.images[0].src,
+                        'qty': 1,
+                        'productId': widget.product.id,
+                      }
+                    ]
+                  });
+                }
+                // ignore: use_build_context_synchronously
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }));
               },
               child:
                   // check if the product is already in the cart
 
-                  const Text("Add To Carts"),
+                  const Text("Add To Cart"),
             ),
           ),
         ),
@@ -262,17 +278,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: ElevatedButton(
-              onPressed: () {
-                // add to cart functionality
-                _firestore
+              onPressed: () async {
+                // add to cart functionality with if the product already exit in the cart then increase the quality
+                DocumentSnapshot cartSnapshot = await _firestore
                     .collection('cart')
                     .doc("971506375562")
-                    .get()
-                    .then((value) {
-                  if (value.exists) {
-                    Map<String, dynamic> cartData =
-                        value.data() as Map<String, dynamic>;
-                    List<dynamic> products = cartData['products'] ?? [];
+                    .get();
+
+                if (cartSnapshot.exists) {
+                  Map<String, dynamic> cartData =
+                      cartSnapshot.data() as Map<String, dynamic>;
+                  List<dynamic> products = cartData['products'] ?? [];
+
+                  // Check if the product already exists in the cart
+                  int existingProductIndex = products.indexWhere(
+                      (product) => product['productId'] == widget.product.id);
+
+                  if (existingProductIndex != -1) {
+                    // If the product exists, increment its quantity
+                    products[existingProductIndex]['qty'] += 1;
+                  } else {
+                    // If the product doesn't exist, add it to the cart with quantity 1
                     products.add({
                       'name': widget.product.name,
                       'image': widget.product.images.isEmpty
@@ -281,26 +307,32 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       'qty': 1,
                       'productId': widget.product.id,
                     });
-                    _firestore
-                        .collection('cart')
-                        .doc("971506375562")
-                        .update({'products': products});
-                  } else {
-                    _firestore.collection('cart').doc("971506375562").set({
-                      'products': [
-                        {
-                          'name': widget.product.name,
-                          'image': widget.product.images.isEmpty
-                              ? "https://via.placeholder.com/150"
-                              : widget.product.images[0].src,
-                          'qty': 1,
-                          'productId': widget.product.id,
-                        }
-                      ]
-                    });
                   }
-                });
-                // Navigator.pushNamed(context, CartScreen.routeName);
+
+                  // Update the cart in Firestore
+                  await _firestore
+                      .collection('cart')
+                      .doc("971506375562")
+                      .update({'products': products});
+                } else {
+                  // If the cart doesn't exist, create a new cart with the product
+                  await _firestore.collection('cart').doc("971506375562").set({
+                    'products': [
+                      {
+                        'name': widget.product.name,
+                        'image': widget.product.images.isEmpty
+                            ? "https://via.placeholder.com/150"
+                            : widget.product.images[0].src,
+                        'qty': 1,
+                        'productId': widget.product.id,
+                      }
+                    ]
+                  });
+                }
+                // ignore: use_build_context_synchronously
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }));
               },
               child:
                   // check if the product is already in the cart
