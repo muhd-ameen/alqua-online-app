@@ -1,5 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
 
 class LiveCartPage extends StatefulWidget {
   const LiveCartPage({
@@ -19,7 +22,7 @@ class _LiveCartPageState extends State<LiveCartPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add functionality to add items to the cart
-          _firestore.collection('cart').doc("971506375562").update({
+          _firestore.collection('cart').doc(firebaseUserNumber).update({
             'products': FieldValue.arrayUnion([
               {
                 'name': 'Product Names',
@@ -48,7 +51,8 @@ class _LiveCartPageState extends State<LiveCartPage> {
         title: const Text('Cart'),
       ),
       body: StreamBuilder(
-        stream: _firestore.collection('cart').doc("971506375562").snapshots(),
+        stream:
+            _firestore.collection('cart').doc(firebaseUserNumber).snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
@@ -73,7 +77,7 @@ class _LiveCartPageState extends State<LiveCartPage> {
                       products.removeAt(index);
                       _firestore
                           .collection('cart')
-                          .doc("971506375562")
+                          .doc(firebaseUserNumber)
                           .update({'products': products});
                     },
                   )

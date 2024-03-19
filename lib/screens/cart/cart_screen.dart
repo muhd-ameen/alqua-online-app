@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
 import 'package:shop_app/utils/color_class.dart';
 import 'package:shop_app/utils/constants.dart';
 
@@ -36,8 +37,10 @@ class _CartScreenState extends State<CartScreen> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: StreamBuilder(
-              stream:
-                  _firestore.collection('cart').doc("971506375562").snapshots(),
+              stream: _firestore
+                  .collection('cart')
+                  .doc(firebaseUserNumber)
+                  .snapshots(),
               builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -61,7 +64,7 @@ class _CartScreenState extends State<CartScreen> {
                           });
                           _firestore
                               .collection('cart')
-                              .doc("971506375562")
+                              .doc(firebaseUserNumber)
                               .update({
                             'products': products,
                           });
@@ -127,7 +130,7 @@ class _CartScreenState extends State<CartScreen> {
                                           });
                                           _firestore
                                               .collection('cart')
-                                              .doc("971506375562")
+                                              .doc(firebaseUserNumber)
                                               .update({
                                             'products': products,
                                           });
@@ -159,7 +162,7 @@ class _CartScreenState extends State<CartScreen> {
                                           });
                                           _firestore
                                               .collection('cart')
-                                              .doc("971506375562")
+                                              .doc(firebaseUserNumber)
                                               .update({
                                             'products': products,
                                           });
@@ -244,14 +247,14 @@ class _CartScreenState extends State<CartScreen> {
                         onPressed: () async {
                           DocumentSnapshot cartSnapshot = await _firestore
                               .collection('cart')
-                              .doc("971506375562")
+                              .doc(firebaseUserNumber)
                               .get();
                           List<dynamic> products = (cartSnapshot.data()
                               as Map<String, dynamic>)['products'];
 
                           DocumentSnapshot orderSnapshot = await _firestore
                               .collection('orders')
-                              .doc("971506375562")
+                              .doc(firebaseUserNumber)
                               .get();
 
                           if (orderSnapshot.exists) {
@@ -264,7 +267,7 @@ class _CartScreenState extends State<CartScreen> {
 // Set or update the order with the combined products
                           await _firestore
                               .collection('orders')
-                              .doc("971506375562")
+                              .doc(firebaseUserNumber)
                               .set({
                             'products': products,
                           });
@@ -272,7 +275,7 @@ class _CartScreenState extends State<CartScreen> {
 // Clear products from the cart
                           await _firestore
                               .collection('cart')
-                              .doc("971506375562")
+                              .doc(firebaseUserNumber)
                               .update({
                             'products': [],
                           });

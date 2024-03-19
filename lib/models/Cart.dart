@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'Product.dart';
 
 class Cart {

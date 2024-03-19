@@ -1,13 +1,25 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:shop_app/utils/api_support.dart';
 import 'package:shop_app/screens/home/models/category_model.dart';
 import 'package:shop_app/screens/home/models/products_model.dart';
+  String? firebaseUserNumber;
 
 class HomeProvider extends ChangeNotifier {
+// get Firebase logged in user
+  void getFirebaseUser() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      firebaseUserNumber =
+          FirebaseAuth.instance.currentUser!.phoneNumber!.substring(1);
+      log("firebaseUserNumber: $firebaseUserNumber");
+      notifyListeners();
+    }
+  }
+
   /// Get all categories
 
   bool getAllCategoriesLoading = false;

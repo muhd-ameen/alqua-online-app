@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/home/models/products_model.dart';
+import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
 import 'components/color_dots.dart';
 import 'components/product_description.dart';
 import 'components/product_images.dart';
@@ -113,7 +114,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 // add to cart functionality with if the product already exit in the cart then increase the quality
                 DocumentSnapshot cartSnapshot = await _firestore
                     .collection('cart')
-                    .doc("971506375562")
+                    .doc(firebaseUserNumber)
                     .get();
 
                 if (cartSnapshot.exists) {
@@ -143,11 +144,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   // Update the cart in Firestore
                   await _firestore
                       .collection('cart')
-                      .doc("971506375562")
+                      .doc(firebaseUserNumber)
                       .update({'products': products});
                 } else {
                   // If the cart doesn't exist, create a new cart with the product
-                  await _firestore.collection('cart').doc("971506375562").set({
+                  await _firestore
+                      .collection('cart')
+                      .doc(firebaseUserNumber)
+                      .set({
                     'products': [
                       {
                         'name': widget.product.name,
@@ -282,7 +286,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 // add to cart functionality with if the product already exit in the cart then increase the quality
                 DocumentSnapshot cartSnapshot = await _firestore
                     .collection('cart')
-                    .doc("971506375562")
+                    .doc(firebaseUserNumber)
                     .get();
 
                 if (cartSnapshot.exists) {
@@ -312,11 +316,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   // Update the cart in Firestore
                   await _firestore
                       .collection('cart')
-                      .doc("971506375562")
+                      .doc(firebaseUserNumber)
                       .update({'products': products});
                 } else {
                   // If the cart doesn't exist, create a new cart with the product
-                  await _firestore.collection('cart').doc("971506375562").set({
+                  await _firestore
+                      .collection('cart')
+                      .doc(firebaseUserNumber)
+                      .set({
                     'products': [
                       {
                         'name': widget.product.name,

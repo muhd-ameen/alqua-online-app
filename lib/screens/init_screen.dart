@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/screens/favorite/favorite_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
 import 'package:shop_app/utils/constants.dart';
 
@@ -23,6 +25,14 @@ class _InitScreenState extends State<InitScreen> {
     setState(() {
       currentSelectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    HomeProvider homeProvider =
+        Provider.of<HomeProvider>(context, listen: false);
+    Future.microtask(() => homeProvider.getFirebaseUser());
+    super.initState();
   }
 
   final pages = [

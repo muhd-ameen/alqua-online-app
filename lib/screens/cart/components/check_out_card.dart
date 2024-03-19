@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
 import 'package:shop_app/utils/constants.dart';
 
 class CheckoutCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -79,7 +80,10 @@ class CheckoutCard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       /// add cart items to user phoneNumber doc inside orders collection  and clear the cart
-                      _firestore.collection('orders').doc("971506375561").set({
+                      firestore
+                          .collection('orders')
+                          .doc(firebaseUserNumber)
+                          .set({
                         'products': [
                           {
                             'name': 'Product Name',
@@ -103,7 +107,7 @@ class CheckoutCard extends StatelessWidget {
                       });
                       // `_firestore
                       //     .collection('cart')
-                      //     .doc("971506375562")
+                      //     .doc(firebaseUserNumber)
                       //     .update({'products': []});`
                     },
                     child: const Text("Check Out"),

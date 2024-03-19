@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:shop_app/screens/init_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 
-import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
