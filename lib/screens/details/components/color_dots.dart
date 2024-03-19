@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/home/models/products_model.dart';
+import 'package:alqua_online/screens/home/models/products_model.dart';
 
 import '../../../components/rounded_icon_btn.dart';
-import 'package:shop_app/utils/constants.dart';
-
+import 'package:alqua_online/utils/constants.dart';
 
 class ColorDots extends StatelessWidget {
   const ColorDots({

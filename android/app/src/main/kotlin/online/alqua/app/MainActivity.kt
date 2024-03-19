@@ -1,4 +1,4 @@
-package com.example.demo_app
+package online.alqua.app
 
 import io.flutter.embedding.android.FlutterActivity
 

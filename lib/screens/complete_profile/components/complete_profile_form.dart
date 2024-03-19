@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/utils/constants.dart';
 import '../../otp/otp_screen.dart';
 
 class CompleteProfileForm extends StatefulWidget {

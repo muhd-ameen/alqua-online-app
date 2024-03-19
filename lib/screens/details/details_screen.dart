@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_app/screens/cart/cart_screen.dart';
-import 'package:shop_app/screens/home/models/products_model.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/screens/cart/cart_screen.dart';
+import 'package:alqua_online/screens/home/models/products_model.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
 import 'components/color_dots.dart';
 import 'components/product_description.dart';
 import 'components/product_images.dart';

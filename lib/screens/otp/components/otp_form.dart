@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/utils/constants.dart';
 
 class OtpForm extends StatefulWidget {
   const OtpForm({

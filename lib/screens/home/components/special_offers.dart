@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
-import 'package:shop_app/screens/products/products_screen.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/screens/products/products_screen.dart';
 
 import 'section_title.dart';
 

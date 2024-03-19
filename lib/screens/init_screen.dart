@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/favorite/favorite_screen.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
-import 'package:shop_app/screens/profile/profile_screen.dart';
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/screens/favorite/favorite_screen.dart';
+import 'package:alqua_online/screens/home/home_screen.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/screens/profile/profile_screen.dart';
+import 'package:alqua_online/utils/constants.dart';
 
 const Color inActiveIconColor = Color(0xFFB6B6B6);
 

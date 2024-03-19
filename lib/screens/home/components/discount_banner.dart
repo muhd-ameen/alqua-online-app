@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/utils/color_class.dart';
+import 'package:alqua_online/utils/color_class.dart';
 
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({

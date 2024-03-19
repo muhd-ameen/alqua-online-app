@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/init_screen.dart';
+import 'package:alqua_online/screens/init_screen.dart';
 
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/utils/constants.dart';
 import '../sign_in/sign_in_screen.dart';
 import 'components/splash_content.dart';
 

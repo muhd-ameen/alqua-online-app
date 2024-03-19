@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/components/product_card.dart';
-import 'package:shop_app/screens/details/details_screen.dart';
-import 'package:shop_app/screens/home/components/search_field.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/components/product_card.dart';
+import 'package:alqua_online/screens/details/details_screen.dart';
+import 'package:alqua_online/screens/home/components/search_field.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/utils/constants.dart';
 
 class SearchProductsScreen extends StatefulWidget {
   const SearchProductsScreen({
@@ -79,11 +79,11 @@ class _SearchProductsScreenState extends State<SearchProductsScreen> {
                               product: snapshot.searchProductList[index],
                             ),
                           ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
               ],
             ),
           ),

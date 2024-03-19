@@ -4,10 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:shop_app/utils/api_support.dart';
-import 'package:shop_app/screens/home/models/category_model.dart';
-import 'package:shop_app/screens/home/models/products_model.dart';
-  String? firebaseUserNumber;
+import 'package:alqua_online/utils/api_support.dart';
+import 'package:alqua_online/screens/home/models/category_model.dart';
+import 'package:alqua_online/screens/home/models/products_model.dart';
+
+String? firebaseUserNumber;
 
 class HomeProvider extends ChangeNotifier {
 // get Firebase logged in user

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/home/models/products_model.dart';
+import 'package:alqua_online/screens/home/models/products_model.dart';
 
-import 'package:shop_app/utils/constants.dart';
-
+import 'package:alqua_online/utils/constants.dart';
 
 class ProductImages extends StatefulWidget {
   const ProductImages({
@@ -45,11 +44,9 @@ class _ProductImagesState extends State<ProductImages> {
                     selectedImage = index;
                   });
                 },
-                image:
-                widget.product.images.isEmpty
+                image: widget.product.images.isEmpty
                     ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
-                    :
-                 widget.product.images[index].src!,
+                    : widget.product.images[index].src!,
               ),
             ),
           ],

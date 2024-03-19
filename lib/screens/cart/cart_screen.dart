@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
-import 'package:shop_app/utils/color_class.dart';
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/utils/color_class.dart';
+import 'package:alqua_online/utils/constants.dart';
 
 import '../../models/Cart.dart';
 

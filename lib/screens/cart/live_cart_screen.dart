@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
 
 class LiveCartPage extends StatefulWidget {
   const LiveCartPage({

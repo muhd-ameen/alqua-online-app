@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAtXZqXhU5nLHnbZS37hs843hQ7ct2lMtQ',
-    appId: '1:41289264982:android:16bfdf8725f2e2d84970f7',
+    appId: '1:41289264982:android:7e29cc1e6e0b0dd94970f7',
     messagingSenderId: '41289264982',
     projectId: 'souq-alqua',
     storageBucket: 'souq-alqua.appspot.com',
@@ -59,10 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAZeZDF1VDwt381Y1QYR6nNiyviw8-xVic',
-    appId: '1:41289264982:ios:8d08864f7d08898a4970f7',
+    appId: '1:41289264982:ios:4342d880232f1d084970f7',
     messagingSenderId: '41289264982',
     projectId: 'souq-alqua',
     storageBucket: 'souq-alqua.appspot.com',
-    iosBundleId: 'com.example.demoApp',
+    iosBundleId: 'online.alqua.app',
   );
 }

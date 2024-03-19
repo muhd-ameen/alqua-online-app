@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_app/utils/color_class.dart';
+import 'package:alqua_online/utils/color_class.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/home/components/search_screen.dart';
+import 'package:alqua_online/screens/home/components/search_screen.dart';
 
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/utils/constants.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({

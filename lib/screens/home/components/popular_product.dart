@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
 
 import '../../../components/product_card.dart';
 import '../../details/details_screen.dart';
@@ -34,7 +34,7 @@ class PopularProducts extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  ProductDetailsScreen(
+                              builder: (context) => ProductDetailsScreen(
                                 product: snapshot.allProducts[index],
                               ),
                             ));

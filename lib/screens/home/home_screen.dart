@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/home/provider/home_screen_provider.dart';
+import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
 
 import 'components/categories.dart';
 import 'components/discount_banner.dart';

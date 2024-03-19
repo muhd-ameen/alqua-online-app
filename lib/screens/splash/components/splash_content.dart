@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:shop_app/utils/image_class.dart';
+import 'package:alqua_online/utils/image_class.dart';
 
 class SplashContent extends StatefulWidget {
   const SplashContent({

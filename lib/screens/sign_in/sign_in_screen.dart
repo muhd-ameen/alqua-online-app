@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/utils/image_class.dart';
+import 'package:alqua_online/utils/image_class.dart';
 
 import '../../components/no_account_text.dart';
 import 'components/sign_form.dart';

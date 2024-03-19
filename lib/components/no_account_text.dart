@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/utils/constants.dart';
+import 'package:alqua_online/utils/constants.dart';
 
 import '../screens/sign_up/sign_up_screen.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/Product.dart';
-
+import 'package:alqua_online/models/Product.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});

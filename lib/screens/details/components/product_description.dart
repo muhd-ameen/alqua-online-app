@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_app/screens/home/models/products_model.dart';
+import 'package:alqua_online/screens/home/models/products_model.dart';
 
-import 'package:shop_app/utils/constants.dart';
-
+import 'package:alqua_online/utils/constants.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
