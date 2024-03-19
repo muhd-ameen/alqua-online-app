@@ -5,7 +5,6 @@ import 'package:shop_app/utils/color_class.dart';
 import 'package:shop_app/utils/constants.dart';
 
 import '../../models/Cart.dart';
-import 'components/check_out_card.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -250,13 +249,28 @@ class _CartScreenState extends State<CartScreen> {
                           List<dynamic> products = (cartSnapshot.data()
                               as Map<String, dynamic>)['products'];
 
+                          DocumentSnapshot orderSnapshot = await _firestore
+                              .collection('orders')
+                              .doc("971506375562")
+                              .get();
+
+                          if (orderSnapshot.exists) {
+                            // If order exists, append products to the existing order
+                            List<dynamic> existingProducts = (orderSnapshot
+                                .data() as Map<String, dynamic>)['products'];
+                            products.addAll(existingProducts);
+                          }
+
+// Set or update the order with the combined products
                           await _firestore
                               .collection('orders')
                               .doc("971506375562")
                               .set({
                             'products': products,
                           });
-                          _firestore
+
+// Clear products from the cart
+                          await _firestore
                               .collection('cart')
                               .doc("971506375562")
                               .update({

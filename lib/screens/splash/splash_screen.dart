@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/init_screen.dart';
 
 import 'package:shop_app/utils/constants.dart';
 import '../sign_in/sign_in_screen.dart';
@@ -30,6 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
     //   "image": "assets/images/splash_3.png"
     // },
   ];
+
+  @override
+  void initState() {
+    Future.microtask(
+        () => FirebaseAuth.instance.authStateChanges().listen((User? user) {
+              if (user != null) {
+                Navigator.pushNamed(context, InitScreen.routeName);
+              }
+            }));
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

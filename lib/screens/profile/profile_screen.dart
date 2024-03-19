@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'components/profile_menu.dart';
@@ -18,11 +19,24 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             const ProfilePic(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            Text(
+              FirebaseAuth.instance.currentUser!.displayName!,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+            Text(
+              FirebaseAuth.instance.currentUser!.phoneNumber!,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+            const SizedBox(height: 10),
             ProfileMenu(
               text: "My Account",
               icon: "assets/icons/User Icon.svg",
-              press: () => {},
+              press: () => {
+                // firebaseauth display name to "Abdul Samad"
+                FirebaseAuth.instance.currentUser!
+                    .updateDisplayName("Abdul Samad")
+              },
             ),
             ProfileMenu(
               text: "Notifications",
@@ -42,7 +56,9 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "Log Out",
               icon: "assets/icons/Log out.svg",
-              press: () {},
+              press: () {
+                FirebaseAuth.instance.signOut();
+              },
             ),
           ],
         ),

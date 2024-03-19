@@ -1,9 +1,11 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/init_screen.dart';
 
 import '../../../components/custom_surfix_icon.dart';
-
-import '../../../helper/keyboard.dart';
-import '../../login_success/login_success_screen.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -35,6 +37,49 @@ class _SignFormState extends State<SignForm> {
     }
   }
 
+  String verificationIds = "";
+
+  Future<void> sendOtp(String phoneNumber) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) {
+        // Automatic verification
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        // Handle verification failure
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        setState(() {
+          verificationIds = verificationId;
+          log("verificationId: $verificationId");
+        });
+        // Navigate to OTP verification screen with verificationId
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Auto retrieval timeout
+      },
+    );
+  }
+
+  Future<void> verifyOtp(String otp, String verificationId) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: otp,
+      );
+      await FirebaseAuth.instance
+          .signInWithCredential(credential)
+          .then((value) => Navigator.pushNamed(context, InitScreen.routeName));
+
+      // OTP verified, navigate to home screen
+    } catch (e) {
+      // Handle verification failure
+    }
+  }
+
+  final TextEditingController _phoneNumberController =
+      TextEditingController(text: "+971522160460");
+  final TextEditingController _otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -42,6 +87,7 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _phoneNumberController,
             keyboardType: TextInputType.phone,
             // controller: TextEditingController()..text = "user@alqua.online",
             onSaved: (newValue) => email = newValue,
@@ -74,7 +120,41 @@ class _SignFormState extends State<SignForm> {
               suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
             ),
           ),
-          // const SizedBox(height: 20),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              sendOtp(_phoneNumberController.text);
+              // if (_formKey.currentState!.validate()) {
+              //   _formKey.currentState!.save();
+              //   // if all are valid then go to success screen
+              //   KeyboardUtil.hideKeyboard(context);
+              //   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+              // }
+            },
+            child: const Text("Send otp"),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: _otpController,
+            keyboardType: TextInputType.phone,
+            onChanged: (value) {
+              // if (value.isNotEmpty) {
+              //   removeError(error: kEmailNullError);
+              // } else if (emailValidatorRegExp.hasMatch(value)) {
+              //   removeError(error: kInvalidEmailError);
+              // }
+              // return;
+            },
+            decoration: const InputDecoration(
+              labelText: "OTP",
+              hintText: "Please enter OTP",
+              // If  you are using latest version of flutter then lable text and hint text shown like this
+              // if you r using flutter less then 1.20.* then maybe this is not working properly
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
+            ),
+          ),
+
           // TextFormField(
           //   controller: TextEditingController()..text = "user@alqua.online",
           //   obscureText: true,
@@ -134,14 +214,15 @@ class _SignFormState extends State<SignForm> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
+              // if (_formKey.currentState!.validate()) {
+              //   _formKey.currentState!.save();
+              //   // if all are valid then go to success screen
+              //   KeyboardUtil.hideKeyboard(context);
+              //   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+              // }
+              verifyOtp(_otpController.text, verificationIds);
             },
-            child: const Text("Continue"),
+            child: const Text("Verify OTP"),
           ),
         ],
       ),
