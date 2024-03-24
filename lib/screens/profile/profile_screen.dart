@@ -1,3 +1,4 @@
+import 'package:alqua_online/screens/sign_in/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -53,6 +54,10 @@ class ProfileScreen extends StatelessWidget {
               icon: "assets/icons/Log out.svg",
               press: () {
                 FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const SignInScreen();
+                }), (route) => false);
               },
             ),
           ],

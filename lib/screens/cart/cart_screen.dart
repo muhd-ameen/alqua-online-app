@@ -1,9 +1,11 @@
+import 'package:alqua_online/utils/animation_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
 import 'package:alqua_online/utils/color_class.dart';
 import 'package:alqua_online/utils/constants.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../models/Cart.dart';
 
@@ -51,132 +53,162 @@ class _CartScreenState extends State<CartScreen> {
                 Map<String, dynamic> cartData =
                     snapshot.data!.data() as Map<String, dynamic>;
                 List<dynamic> products = cartData['products'] ?? [];
-                return ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Dismissible(
-                        key: Key(products[index]["id"].toString()),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (direction) {
-                          setState(() {
-                            products.removeAt(index);
-                          });
-                          _firestore
-                              .collection('cart')
-                              .doc(firebaseUserNumber)
-                              .update({
-                            'products': products,
-                          });
-                        },
-                        background: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFE6E6),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
-                            children: [
-                              const Spacer(),
-                              SvgPicture.asset("assets/icons/Trash.svg"),
-                            ],
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 88,
-                              child: AspectRatio(
-                                aspectRatio: 0.88,
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF5F6F9),
-                                    borderRadius: BorderRadius.circular(15),
+                return products.isEmpty
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Lottie.asset(
+                                  AnimationClass.noData,
+                                  height: 200,
+                                ),
+                                const SizedBox(height: 16),
+                                const Text(
+                                  "لا توجد نتائج",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  child:
-                                      Image.network(products[index]['image']),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: products.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Dismissible(
+                              key: Key(products[index]["id"].toString()),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) {
+                                setState(() {
+                                  products.removeAt(index);
+                                });
+                                _firestore
+                                    .collection('cart')
+                                    .doc(firebaseUserNumber)
+                                    .update({
+                                  'products': products,
+                                });
+                              },
+                              background: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFFFE6E6),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Spacer(),
+                                    SvgPicture.asset("assets/icons/Trash.svg"),
+                                  ],
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
+                              child: Row(
                                 children: [
-                                  Text(
-                                    products[index]['name'],
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 16),
-                                    maxLines: 2,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        icon: Container(
-                                            decoration: BoxDecoration(
-                                              color: ColorClass.grayColor
-                                                  .withOpacity(0.3),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: const Icon(Icons.add)),
-                                        onPressed: () {
-                                          setState(() {
-                                            products[index]['qty']++;
-                                          });
-                                          _firestore
-                                              .collection('cart')
-                                              .doc(firebaseUserNumber)
-                                              .update({
-                                            'products': products,
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        products[index]['qty'].toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      IconButton(
-                                        icon: Container(
-                                          decoration: BoxDecoration(
-                                            color: ColorClass.grayColor
-                                                .withOpacity(0.3),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: const Icon(
-                                            Icons.remove,
-                                          ),
+                                  SizedBox(
+                                    width: 88,
+                                    child: AspectRatio(
+                                      aspectRatio: 0.88,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFF5F6F9),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (products[index]['qty'] > 1) {
-                                              products[index]['qty']--;
-                                            }
-                                          });
-                                          _firestore
-                                              .collection('cart')
-                                              .doc(firebaseUserNumber)
-                                              .update({
-                                            'products': products,
-                                          });
-                                        },
-                                      )
-                                    ],
+                                        child: Image.network(
+                                            products[index]['image']),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          products[index]['name'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                          maxLines: 2,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: ColorClass.grayColor
+                                                        .withOpacity(0.3),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                  ),
+                                                  child: const Icon(Icons.add)),
+                                              onPressed: () {
+                                                setState(() {
+                                                  products[index]['qty']++;
+                                                });
+                                                _firestore
+                                                    .collection('cart')
+                                                    .doc(firebaseUserNumber)
+                                                    .update({
+                                                  'products': products,
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              products[index]['qty'].toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                            ),
+                                            IconButton(
+                                              icon: Container(
+                                                decoration: BoxDecoration(
+                                                  color: ColorClass.grayColor
+                                                      .withOpacity(0.3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.remove,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (products[index]['qty'] >
+                                                      1) {
+                                                    products[index]['qty']--;
+                                                  }
+                                                });
+                                                _firestore
+                                                    .collection('cart')
+                                                    .doc(firebaseUserNumber)
+                                                    .update({
+                                                  'products': products,
+                                                });
+                                              },
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
-                              ),
-                            )
-                          ],
-                        )),
-                  ),
-                );
+                              )),
+                        ),
+                      );
               }),
         ),
         bottomNavigationBar: Container(

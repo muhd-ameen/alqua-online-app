@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:alqua_online/screens/home/models/products_model.dart';
 
 import 'package:alqua_online/utils/constants.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
@@ -27,25 +29,31 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
+        const SizedBox(height: 10),
         Align(
           alignment: Alignment.centerRight,
           child: Container(
-            padding: const EdgeInsets.all(16),
-            width: 48,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF5F6F9),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
+              padding: const EdgeInsets.all(4),
+              width: 65,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF5F6F9),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
               ),
-            ),
-            child: SvgPicture.asset(
-              "assets/icons/Heart Icon_2.svg",
-              colorFilter:
-                  const ColorFilter.mode(Color(0xFFDBDEE4), BlendMode.srcIn),
-              height: 16,
-            ),
-          ),
+              child: IconButton(
+                onPressed: () {
+                  Share.share(
+                    'Check out this product\n\n${product.name} on Alqua Online\n\nCall - +97137356288\n\nDownload the app from Apple App Store - https://apps.apple.com/us/app/alqua-online/id1587721287\n\n',
+                  );
+                },
+                icon: const Icon(
+                  Icons.share,
+                  color: Colors.black,
+                  size: 16,
+                ),
+              )),
         ),
         Padding(
           padding: const EdgeInsets.only(
