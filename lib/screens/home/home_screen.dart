@@ -29,22 +29,32 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  Future<void> onRefresh() async {
+    HomeProvider homeProvider =
+        Provider.of<HomeProvider>(context, listen: false);
+    homeProvider.getAllCategories(context);
+    homeProvider.getAllProducts(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            children: [
-              HomeHeader(),
-              DiscountBanner(),
-              Categories(),
-              SpecialOffers(),
-              SizedBox(height: 20),
-              PopularProducts(),
-              SizedBox(height: 20),
-            ],
+        child: RefreshIndicator(
+          onRefresh: onRefresh,
+          child: const SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Column(
+              children: [
+                HomeHeader(),
+                DiscountBanner(),
+                Categories(),
+                SpecialOffers(),
+                SizedBox(height: 20),
+                PopularProducts(),
+                SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

@@ -25,7 +25,10 @@ class PopularProducts extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                ...List.generate(snapshot.allProducts.length, (index) {
+                ...List.generate(
+                    snapshot.allProducts.length > 5
+                        ? 5
+                        : snapshot.allProducts.length, (index) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: DynamicProductCard(
