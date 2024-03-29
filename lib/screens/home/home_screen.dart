@@ -6,7 +6,7 @@ import 'components/categories.dart';
 import 'components/discount_banner.dart';
 import 'components/home_header.dart';
 import 'components/popular_product.dart';
-import 'components/special_offers.dart';
+import 'components/category_view.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 HomeHeader(),
                 DiscountBanner(),
                 Categories(),
-                SpecialOffers(),
-                SizedBox(height: 20),
                 PopularProducts(),
+                SizedBox(height: 20),
+                CategoryView(),
                 SizedBox(height: 20),
               ],
             ),
