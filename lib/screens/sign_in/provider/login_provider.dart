@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 class LoginProvider extends ChangeNotifier {
   bool isGuestLogin = false;
 
+  set updateGuestLogin(bool value) {
+    isGuestLogin = value;
+    notifyListeners();
+  }
+
   String verificationIds = "";
   bool otpSend = false;
 

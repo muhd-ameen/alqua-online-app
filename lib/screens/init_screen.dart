@@ -28,22 +28,20 @@ class _InitScreenState extends State<InitScreen> {
     });
   }
 
+  List pages = [];
+
   @override
   void initState() {
     HomeProvider homeProvider =
         Provider.of<HomeProvider>(context, listen: false);
+    pages = [
+      const HomeScreen(),
+      const AllCategoriesScreen(),
+      const ProfileScreen()
+    ];
     Future.microtask(() => homeProvider.getFirebaseUser());
     super.initState();
   }
-
-  final pages = [
-    const HomeScreen(),
-    const AllCategoriesScreen(),
-    // const Center(
-    //   child: Text("Chat"),
-    // ),
-    const ProfileScreen()
-  ];
 
   @override
   Widget build(BuildContext context) {

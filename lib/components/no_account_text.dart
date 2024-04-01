@@ -1,3 +1,4 @@
+import 'package:alqua_online/screens/init_screen.dart';
 import 'package:alqua_online/screens/sign_in/provider/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:alqua_online/utils/constants.dart';
@@ -19,8 +20,10 @@ class NoAccountText extends StatelessWidget {
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
-                  onTap: () =>
-                      Navigator.pushNamed(context, SignUpScreen.routeName),
+                  onTap: () {
+                    snap.updateGuestLogin = true;
+                    Navigator.pushNamed(context, InitScreen.routeName);
+                  },
                   child: const Text(
                     "Continue as guest?",
                     style: TextStyle(fontSize: 16, color: kPrimaryColor),

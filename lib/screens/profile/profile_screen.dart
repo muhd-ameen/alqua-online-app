@@ -17,66 +17,91 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Profile"),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Column(
-          children: [
-            const ProfilePic(),
-            const SizedBox(height: 10),
-            Text(
-              FirebaseAuth.instance.currentUser!.displayName ?? "",
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            Text(
-              FirebaseAuth.instance.currentUser!.phoneNumber!,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            const SizedBox(height: 10),
-            ProfileMenu(
-              text: "My Account",
-              icon: "assets/icons/User Icon.svg",
-              press: () => {
-                // firebaseauth display name to "Abdul Samad"
-                FirebaseAuth.instance.currentUser!
-                    .updateDisplayName("Abdul Samad")
-              },
-            ),
-            ProfileMenu(
-              text: "Settings",
-              icon: "assets/icons/Settings.svg",
-              press: () {},
-            ),
-            ProfileMenu(
-              text: "Help Center",
-              icon: "assets/icons/Question mark.svg",
-              press: () {},
-            ),
-            ProfileMenu(
-              text: "Log Out",
-              icon: "assets/icons/Log out.svg",
-              press: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const LogoutDialog();
-                  },
-                ).then((value) {
-                  // This block executes when the dialog is dismissed.
-                  if (value != null && value) {
-                    LoginProvider loginProvider =
-                        Provider.of<LoginProvider>(context, listen: false);
+      body: Consumer<LoginProvider>(
+        builder: (context, snap, child) => SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: FirebaseAuth.instance.currentUser == null || snap.isGuestLogin
+              ? Center(
+                  child: Column(
+                    children: [
+                      const Text("Login to your acccout."),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const SignInScreen();
+                              }), (route) => false);
+                            },
+                            child: const Text('Login')),
+                      )
+                    ],
+                  ),
+                )
+              : Column(
+                  children: [
+                    const ProfilePic(),
+                    const SizedBox(height: 10),
+                    Text(
+                      FirebaseAuth.instance.currentUser!.displayName ?? "",
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                    Text(
+                      FirebaseAuth.instance.currentUser!.phoneNumber!,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                    const SizedBox(height: 10),
+                    ProfileMenu(
+                      text: "My Account",
+                      icon: "assets/icons/User Icon.svg",
+                      press: () => {
+                        // firebaseauth display name to "Abdul Samad"
+                        FirebaseAuth.instance.currentUser!
+                            .updateDisplayName("Abdul Samad")
+                      },
+                    ),
+                    ProfileMenu(
+                      text: "Settings",
+                      icon: "assets/icons/Settings.svg",
+                      press: () {},
+                    ),
+                    ProfileMenu(
+                      text: "Help Center",
+                      icon: "assets/icons/Question mark.svg",
+                      press: () {},
+                    ),
+                    ProfileMenu(
+                      text: "Log Out",
+                      icon: "assets/icons/Log out.svg",
+                      press: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const LogoutDialog();
+                          },
+                        ).then((value) {
+                          // This block executes when the dialog is dismissed.
+                          if (value != null && value) {
+                            LoginProvider loginProvider =
+                                Provider.of<LoginProvider>(context,
+                                    listen: false);
 
-                    loginProvider.setOtpSend = false;
-                    FirebaseAuth.instance.signOut();
-                    Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const SignInScreen();
-                    }), (route) => false);
-                  }
-                });
-              },
-            ),
-          ],
+                            loginProvider.setOtpSend = false;
+                            FirebaseAuth.instance.signOut();
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) {
+                              return const SignInScreen();
+                            }), (route) => false);
+                          }
+                        });
+                      },
+                    ),
+                  ],
+                ),
         ),
       ),
     );
