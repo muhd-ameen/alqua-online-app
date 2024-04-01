@@ -47,67 +47,72 @@ class _InitScreenState extends State<InitScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[currentSelectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: updateCurrentIndex,
-        currentIndex: currentSelectedIndex,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "assets/icons/Shop Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                inActiveIconColor,
-                BlendMode.srcIn,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: pages[currentSelectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: updateCurrentIndex,
+          currentIndex: currentSelectedIndex,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/Shop Icon.svg",
+                colorFilter: const ColorFilter.mode(
+                  inActiveIconColor,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/icons/Shop Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                kPrimaryColor,
-                BlendMode.srcIn,
+              activeIcon: SvgPicture.asset(
+                "assets/icons/Shop Icon.svg",
+                colorFilter: const ColorFilter.mode(
+                  kPrimaryColor,
+                  BlendMode.srcIn,
+                ),
               ),
+              label: "Home",
             ),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                inActiveIconColor,
-                BlendMode.srcIn,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/Heart Icon.svg",
+                colorFilter: const ColorFilter.mode(
+                  inActiveIconColor,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                kPrimaryColor,
-                BlendMode.srcIn,
+              activeIcon: SvgPicture.asset(
+                "assets/icons/Heart Icon.svg",
+                colorFilter: const ColorFilter.mode(
+                  kPrimaryColor,
+                  BlendMode.srcIn,
+                ),
               ),
+              label: "Fav",
             ),
-            label: "Fav",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "assets/icons/User Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                inActiveIconColor,
-                BlendMode.srcIn,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/User Icon.svg",
+                colorFilter: const ColorFilter.mode(
+                  inActiveIconColor,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/icons/User Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                kPrimaryColor,
-                BlendMode.srcIn,
+              activeIcon: SvgPicture.asset(
+                "assets/icons/User Icon.svg",
+                colorFilter: const ColorFilter.mode(
+                  kPrimaryColor,
+                  BlendMode.srcIn,
+                ),
               ),
+              label: "Fav",
             ),
-            label: "Fav",
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

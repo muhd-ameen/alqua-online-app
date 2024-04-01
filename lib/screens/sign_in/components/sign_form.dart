@@ -36,7 +36,7 @@ class _SignFormState extends State<SignForm> {
                   ),
                   children: [
                     TextSpan(
-                      text: _phoneNumberController.text,
+                      text: "+971${_phoneNumberController.text}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -63,6 +63,11 @@ class _SignFormState extends State<SignForm> {
             TextFormField(
               controller: _otpController,
               keyboardType: TextInputType.phone,
+              onChanged: (value) {
+                if (value.length == 6) {
+                  FocusScope.of(context).unfocus();
+                }
+              },
               inputFormatters: // Only numbers can be entered
                   <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly,
@@ -120,9 +125,8 @@ class _SignFormState extends State<SignForm> {
             ElevatedButton(
               onPressed: () {
                 if (_phoneNumberController.text.isNotEmpty &&
-                    _phoneNumberController.text.contains("+971") &&
-                    _phoneNumberController.text.length > 12) {
-                  snap.sendOtp(_phoneNumberController.text);
+                    _phoneNumberController.text.length >= 9) {
+                  snap.sendOtp("+971${_phoneNumberController.text}");
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
