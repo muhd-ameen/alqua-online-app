@@ -1,36 +1,24 @@
 import 'package:alqua_online/screens/sign_in/provider/login_provider.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:alqua_online/firebase_options.dart';
 import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
 import 'package:alqua_online/screens/splash/splash_screen.dart';
+import 'package:shake_flutter/shake_flutter.dart';
 
 import 'utils/routes.dart';
 import 'utils/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Shake.start('uNmFpGkFtjzMrfk5he7xKMERKHMjmGfwQxnD0K19',
+      'ASnjbOtbp6EQCdpIlHjgwS9iYLDrkOAzRVv1RhFXeZVFzaoy9WVCVkJ');
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  if (!kDebugMode) {
-    await FirebaseAppCheck.instance.activate(
-      androidProvider: AndroidProvider.playIntegrity,
-      appleProvider: AppleProvider.appAttest,
-      webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-    );
-  } else {
-    await FirebaseAppCheck.instance.activate(
-      androidProvider: AndroidProvider.debug,
-      appleProvider: AppleProvider.debug,
-    );
-  }
 
   /// Locks the device orientation to portrait
   SystemChrome.setPreferredOrientations([

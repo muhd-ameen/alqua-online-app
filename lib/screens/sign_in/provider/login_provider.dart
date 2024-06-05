@@ -21,14 +21,15 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<void> sendOtp(String phoneNumber) async {
+
     await FirebaseAuth.instance.verifyPhoneNumber(
+    
       phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        // Automatic verification
-      },
+      verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
         // Handle verification failure
       },
+      
       codeSent: (String verificationId, int? resendToken) {
         verificationIds = verificationId;
         otpSend = true;
@@ -61,9 +62,7 @@ class LoginProvider extends ChangeNotifier {
   Future<void> resendOtp(String phoneNumber) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        // Automatic verification
-      },
+      verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
         // Handle verification failure
       },
