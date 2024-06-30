@@ -1,8 +1,10 @@
-import 'package:alqua_online/screens/home/screens/all_categories_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:souq_alqua/screens/home/screens/all_categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
-import 'package:alqua_online/screens/products/products_screen.dart';
+import 'package:souq_alqua/screens/home/provider/home_screen_provider.dart';
+import 'package:souq_alqua/screens/product/products/products_screen.dart';
 
 import 'section_title.dart';
 
@@ -15,13 +17,18 @@ class CategoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context, snapshot, child) => snapshot.getAllCategoriesLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: LoadingAnimationWidget.horizontalRotatingDots(
+                color: Colors.redAccent,
+                size: 35,
+              ),
+            )
           : Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SectionTitle(
-                    title: "فئات المنتجات",
+                    title: "Shop by Categories",
                     press: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -30,6 +37,7 @@ class CategoryView extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(height: 10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -85,13 +93,17 @@ class SpecialOfferCard extends StatelessWidget {
         onTap: press,
         child: SizedBox(
           width: 242,
-          height: 100,
+          height: 130,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
             child: Stack(
               children: [
-                Image.network(
-                  image,
+                CachedNetworkImage(
+                  imageUrl: image,
+                  placeholder: (context, url) => const Center(
+                    child: Icon(Icons.image),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                   fit: BoxFit.cover,
                   width: 242,
                 ),
@@ -102,7 +114,7 @@ class SpecialOfferCard extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.black54,
-                        Colors.black38,
+                        // Colors.black38,
                         Colors.black26,
                         Colors.transparent,
                       ],
@@ -170,8 +182,13 @@ class VerticalCategoryCard extends StatelessWidget {
                         color: Colors.black87,
                         width: 242,
                       )
-                    : Image.network(
-                        image,
+                    : CachedNetworkImage(
+                        imageUrl: image,
+                        placeholder: (context, url) => const Center(
+                          child: Icon(Icons.image),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         fit: BoxFit.cover,
                         width: 242,
                       ),

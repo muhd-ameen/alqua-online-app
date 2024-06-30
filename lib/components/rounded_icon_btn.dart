@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:alqua_online/utils/constants.dart';
+import 'package:souq_alqua/utils/constants.dart';
 
 class RoundedIconBtn extends StatelessWidget {
   const RoundedIconBtn({

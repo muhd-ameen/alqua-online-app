@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:alqua_online/screens/home/components/search_screen.dart';
+import 'package:souq_alqua/screens/home/components/search_screen.dart';
 
-import 'package:alqua_online/utils/constants.dart';
+import 'package:souq_alqua/utils/constants.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({
@@ -27,7 +27,7 @@ class SearchField extends StatelessWidget {
           border: searchOutlineInputBorder,
           focusedBorder: searchOutlineInputBorder,
           enabledBorder: searchOutlineInputBorder,
-          hintText: "البحث عن المنتجات",
+          hintText: "Search Products",
           prefixIcon: const Icon(Icons.search),
         ),
       ),

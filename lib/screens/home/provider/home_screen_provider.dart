@@ -1,25 +1,24 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:alqua_online/utils/api_support.dart';
-import 'package:alqua_online/screens/home/models/category_model.dart';
-import 'package:alqua_online/screens/home/models/products_model.dart';
+import 'package:souq_alqua/utils/api_support.dart';
+import 'package:souq_alqua/screens/home/models/category_model.dart';
+import 'package:souq_alqua/screens/home/models/products_model.dart';
 
 String? firebaseUserNumber;
 
 class HomeProvider extends ChangeNotifier {
 // get Firebase logged in user
-  void getFirebaseUser() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      firebaseUserNumber =
-          FirebaseAuth.instance.currentUser!.phoneNumber!.substring(1);
-      log("firebaseUserNumber: $firebaseUserNumber");
-      notifyListeners();
-    }
-  }
+  // void getFirebaseUser() {
+  //   if (FirebaseAuth.instance.currentUser != null) {
+  //     firebaseUserNumber = FirebaseAuth.instance.currentUser!.email.toString();
+  //     log("firebaseUserNumber: $firebaseUserNumber");
+  //     notifyListeners();
+  //   }
+  // }
 
   /// Get all categories
 
@@ -160,5 +159,77 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
 
     return null;
+  }
+
+  Future<int?> getTagIdBySlug(String slug) async {
+    var url =
+        Uri.parse(ApiSupport.baseUrl + ApiSupport.getTagIdBySlug(slug: slug));
+    var headers = {
+      'Authorization':
+          'Basic ${base64Encode(utf8.encode('${ApiSupport.consumerKey}:${ApiSupport.consumerSecret}'))}',
+    };
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+    // log response
+    log(response.body, name: 'getTagIdBySlug');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> tags = json.decode(response.body);
+      if (tags.isNotEmpty) {
+        return tags[0]['id'];
+      }
+    }
+    return null;
+  }
+
+  Future<List<GetAllProducts>> getProductsByTagId(int tagId) async {
+    var url = Uri.parse(
+        ApiSupport.baseUrl + ApiSupport.getProductsByTagId(tagId: tagId));
+    var headers = {
+      'Authorization':
+          'Basic ${base64Encode(utf8.encode('${ApiSupport.consumerKey}:${ApiSupport.consumerSecret}'))}',
+    };
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+    log(response.body, name: 'getProductsByTagId');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> productsJson = json.decode(response.body);
+      return productsJson.map((json) => GetAllProducts.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
+
+  List<GetAllProducts> _topSellingProducts = [];
+  bool _isTopSellingLoading = false;
+
+  List<GetAllProducts> get topSellingProduct => _topSellingProducts;
+  bool get isTopSellingLoading => _isTopSellingLoading;
+
+  Future<void> fetchProductsByTagSlug(String slug) async {
+    _isTopSellingLoading = true;
+    notifyListeners();
+
+    try {
+      final int? tagId = await getTagIdBySlug(slug);
+      if (tagId != null) {
+        _topSellingProducts = await getProductsByTagId(tagId);
+        notifyListeners();
+      } else {
+        _topSellingProducts = [];
+      }
+      notifyListeners();
+    } catch (error) {
+      _topSellingProducts = [];
+      rethrow;
+    } finally {
+      _isTopSellingLoading = false;
+      notifyListeners();
+    }
   }
 }

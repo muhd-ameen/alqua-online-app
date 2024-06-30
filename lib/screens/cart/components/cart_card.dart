@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:alqua_online/utils/constants.dart';
+import 'package:souq_alqua/utils/constants.dart';
 
 import '../../../models/Cart.dart';
 
@@ -41,7 +41,7 @@ class CartCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text.rich(
               TextSpan(
-                text: "\$${cart.product.price}",
+                text: "AED ${cart.product.price}",
                 style: const TextStyle(
                     fontWeight: FontWeight.w600, color: kPrimaryColor),
                 children: [

@@ -1,15 +1,15 @@
 import 'package:flutter/widgets.dart';
-import 'package:alqua_online/screens/init_screen.dart';
-import 'package:alqua_online/screens/splash/splash_screen.dart';
+import 'package:souq_alqua/screens/authentication/sign_up/sign_up_screen.dart';
+import 'package:souq_alqua/screens/authentication/splash/splash_screen.dart';
+import 'package:souq_alqua/screens/home/init_screen.dart';
 
-import 'package:alqua_online/screens/complete_profile/complete_profile_screen.dart';
-import 'package:alqua_online/screens/forgot_password/forgot_password_screen.dart';
-import 'package:alqua_online/screens/home/home_screen.dart';
-import 'package:alqua_online/screens/login_success/login_success_screen.dart';
-import 'package:alqua_online/screens/otp/otp_screen.dart';
-import 'package:alqua_online/screens/profile/profile_screen.dart';
-import 'package:alqua_online/screens/sign_in/sign_in_screen.dart';
-import 'package:alqua_online/screens/sign_up/sign_up_screen.dart';
+import 'package:souq_alqua/screens/profile_screen/complete_profile/complete_profile_screen.dart';
+import 'package:souq_alqua/screens/authentication/forgot_password/forgot_password_screen.dart';
+import 'package:souq_alqua/screens/home/home_screen.dart';
+import 'package:souq_alqua/screens/authentication/login_success/login_success_screen.dart';
+import 'package:souq_alqua/screens/authentication/otp/otp_screen.dart';
+import 'package:souq_alqua/screens/profile_screen/profile/profile_screen.dart';
+import 'package:souq_alqua/screens/authentication/sign_in/sign_in_screen.dart';
 
 // We use name route
 // All our routes will be available here

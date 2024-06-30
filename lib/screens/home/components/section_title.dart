@@ -8,24 +8,30 @@ class SectionTitle extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final GestureTapCallback press;
+  final GestureTapCallback? press;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextButton(
-          onPressed: press,
-          style: TextButton.styleFrom(foregroundColor: Colors.grey),
-          child: const Text("شاهد المزيد"),
-        ),
         Text(
           title,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.black,
+          ),
+        ),
+        Offstage(
+          offstage: press == null,
+          child: TextButton(
+            onPressed: press,
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey,
+              backgroundColor: Colors.grey.shade100,
+            ),
+            child: const Text("See More"),
           ),
         ),
       ],

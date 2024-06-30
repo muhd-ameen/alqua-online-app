@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:alqua_online/utils/constants.dart';
+import 'package:souq_alqua/utils/constants.dart';
 
 class IconBtnWithCounter extends StatelessWidget {
   const IconBtnWithCounter({

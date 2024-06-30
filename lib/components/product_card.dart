@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:alqua_online/screens/home/models/products_model.dart';
-import 'package:alqua_online/utils/constants.dart';
+import 'package:souq_alqua/screens/home/models/products_model.dart';
+import 'package:souq_alqua/utils/constants.dart';
+import 'package:souq_alqua/utils/image_class.dart';
 
 class ProductByCategoryCard extends StatelessWidget {
   const ProductByCategoryCard({
@@ -26,54 +27,61 @@ class ProductByCategoryCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
-              aspectRatio: 1.02,
+              aspectRatio: 1.3,
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: kSecondaryColor.withOpacity(0.1),
+                  border: Border.all(color: kSecondaryColor.withOpacity(0.1)),
+                  // color: kSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(product.images.isEmpty
-                    ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
-                    : product.images[0].src!),
+                child: product.images.isEmpty
+                    ? Image.asset(
+                        ImageClass.emptyProductImage,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(product.images[0].src!),
               ),
             ),
-            const SizedBox(height: 3),
+            const SizedBox(height: 10),
             Text(
               product.name ?? "",
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.end,
               maxLines: 2,
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${product.price}",
+                  "AED ${product.price}",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,
                   ),
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      color: kSecondaryColor.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/icons/Heart Icon_2.svg",
-                      colorFilter: const ColorFilter.mode(
-                          Color(0xFFDBDEE4), BlendMode.srcIn),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   borderRadius: BorderRadius.circular(50),
+                //   onTap: () {},
+                //   child: Container(
+                //     padding: const EdgeInsets.all(6),
+                //     height: 20,
+                //     width: 20,
+                //     decoration: BoxDecoration(
+                //       color: kSecondaryColor.withOpacity(0.1),
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: SvgPicture.asset(
+                //       "assets/icons/Heart Icon_2.svg",
+                //       colorFilter: const ColorFilter.mode(
+                //           Color(0xFFDBDEE4), BlendMode.srcIn),
+                //     ),
+                //   ),
+                // ),
               ],
             )
           ],
@@ -113,9 +121,12 @@ class ProductCard extends StatelessWidget {
                   border: Border.all(color: kSecondaryColor.withOpacity(0.1)),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(product.images.isEmpty
-                    ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
-                    : product.images[0].src!),
+                child: product.images.isEmpty
+                    ? Image.asset(
+                        ImageClass.emptyProductImage,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(product.images[0].src!),
               ),
             ),
             const SizedBox(height: 8),
@@ -128,31 +139,31 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${product.price}",
+                  "AED ${product.price}",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,
                   ),
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      color: kSecondaryColor.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/icons/Heart Icon_2.svg",
-                      colorFilter: const ColorFilter.mode(
-                          Color(0xFFDBDEE4), BlendMode.srcIn),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   borderRadius: BorderRadius.circular(50),
+                //   onTap: () {},
+                //   child: Container(
+                //     padding: const EdgeInsets.all(6),
+                //     height: 20,
+                //     width: 20,
+                //     decoration: BoxDecoration(
+                //       color: kSecondaryColor.withOpacity(0.1),
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: SvgPicture.asset(
+                //       "assets/icons/Heart Icon_2.svg",
+                //       colorFilter: const ColorFilter.mode(
+                //           Color(0xFFDBDEE4), BlendMode.srcIn),
+                //     ),
+                //   ),
+                // ),
               ],
             )
           ],
@@ -193,12 +204,17 @@ class DynamicProductCard extends StatelessWidget {
                   // color: kSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(
-                  product.images.isEmpty
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => const Center(
+                    child: Icon(Icons.image),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  width: 242,
+                  imageUrl: product.images.isEmpty
                       ? "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png"
                       : product.images.first.src ??
                           "https://webstoresl.s3.ap-southeast-1.amazonaws.com/webstore/product-images/no-product-image.png",
-                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -208,35 +224,38 @@ class DynamicProductCard extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 2,
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${product.price}",
+                  "${product.price}.00 AED",
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,
                   ),
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    height: 24,
-                    width: 24,
-                    decoration: BoxDecoration(
-                      color: kSecondaryColor.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/icons/Heart Icon_2.svg",
-                      colorFilter: const ColorFilter.mode(
-                          Color(0xFFDBDEE4), BlendMode.srcIn),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   borderRadius: BorderRadius.circular(50),
+                //   onTap: () {},
+                //   child: Container(
+                //     padding: const EdgeInsets.all(6),
+                //     height: 24,
+                //     width: 24,
+                //     decoration: BoxDecoration(
+                //       color: kSecondaryColor.withOpacity(0.1),
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: SvgPicture.asset(
+                //       "assets/icons/Heart Icon_2.svg",
+                //       colorFilter: const ColorFilter.mode(
+                //           Color(0xFFDBDEE4), BlendMode.srcIn),
+                //     ),
+                //   ),
+                // ),
               ],
             )
           ],

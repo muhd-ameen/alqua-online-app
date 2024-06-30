@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:alqua_online/screens/cart/cart_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:souq_alqua/screens/cart/cart_screen.dart';
+import 'package:souq_alqua/screens/cart/providers/appwrite_cart_provider.dart';
 
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
@@ -18,20 +20,18 @@ class HomeHeader extends StatelessWidget {
         children: [
           const Expanded(child: SearchField()),
           const SizedBox(width: 16),
-          IconBtnWithCounter(
-              svgSrc: "assets/icons/Cart Icon.svg",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CartScreen()),
-                );
-              }),
-          const SizedBox(width: 8),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Bell.svg",
-            numOfitem: 3,
-            press: () {},
+          Consumer<AppwriteCartProvider>(
+            builder: (context, value, _) => IconBtnWithCounter(
+                svgSrc: "assets/icons/Cart Icon.svg",
+                numOfitem: value.cartLength,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CartScreen()),
+                  );
+                }),
           ),
+          const SizedBox(width: 8),
         ],
       ),
     );

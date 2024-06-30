@@ -1,8 +1,9 @@
-import 'package:alqua_online/screens/home/components/category_view.dart';
-import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
-import 'package:alqua_online/screens/products/products_screen.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:souq_alqua/screens/home/components/category_view.dart';
+import 'package:souq_alqua/screens/home/provider/home_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:souq_alqua/screens/product/products/products_screen.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
   const AllCategoriesScreen({super.key});
@@ -16,11 +17,18 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const SizedBox(),
+        title: Text("All Categories",
+            style: Theme.of(context).textTheme.bodyLarge),
+        leading: null,
       ),
       body: Consumer<HomeProvider>(
         builder: (context, snapshot, child) => snapshot.getAllCategoriesLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(
+                child: LoadingAnimationWidget.horizontalRotatingDots(
+                  color: Colors.redAccent,
+                  size: 35,
+                ),
+              )
             : Column(children: [
                 Expanded(
                     child: GridView.builder(
@@ -29,7 +37,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 4,
-                    childAspectRatio: 2.0,
+                    childAspectRatio: 1.8,
                   ),
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

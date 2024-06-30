@@ -1,13 +1,17 @@
-import 'package:alqua_online/utils/animation_class.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:alqua_online/screens/home/provider/home_screen_provider.dart';
-import 'package:alqua_online/utils/color_class.dart';
-import 'package:alqua_online/utils/constants.dart';
-import 'package:lottie/lottie.dart';
+// ignore_for_file: use_build_context_synchronously
 
-import '../../models/Cart.dart';
+import 'package:provider/provider.dart';
+import 'package:souq_alqua/screens/cart/providers/appwrite_cart_provider.dart';
+import 'package:souq_alqua/screens/cart/screen/checkout_screen.dart';
+import 'package:souq_alqua/screens/order_screens/delivery_locations/providers/delivery_location_provider.dart';
+import 'package:souq_alqua/screens/home/init_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:souq_alqua/screens/authentication/sign_in/provider/login_provider.dart';
+
+import 'package:souq_alqua/screens/authentication/sign_in/sign_in_screen.dart';
+import 'package:souq_alqua/utils/constants.dart';
+import 'package:souq_alqua/utils/image_class.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -17,114 +21,182 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  @override
+  void initState() {
+    AppwriteCartProvider appwriteCartProvider =
+        Provider.of<AppwriteCartProvider>(context, listen: false);
+    LoginProvider loginProvider =
+        Provider.of<LoginProvider>(context, listen: false);
+    Future.microtask(() {
+      if (!loginProvider.isGuestLogin) {
+        appwriteCartProvider.getCartItems();
+        appwriteCartProvider.getCartLength();
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Column(
+      appBar: AppBar(
+        title: Consumer2<AppwriteCartProvider, LoginProvider>(
+          builder: (context, snapshot, loginSnap, child) => Row(
             children: [
-              const Text(
-                "Your Cart",
-                style: TextStyle(color: Colors.black),
-              ),
               Text(
-                "${demoCarts.length} items",
-                style: Theme.of(context).textTheme.bodySmall,
+                "Your Cart",
+                style: Theme.of(context).textTheme.titleMedium,
               ),
+              loginSnap.isGuestLogin || snapshot.cartLength == 0
+                  ? const SizedBox()
+                  : Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        color: Colors.redAccent,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.redAccent,
+                            blurRadius: 2,
+                            spreadRadius: 1,
+                          )
+                        ],
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '${snapshot.cartLength}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
             ],
           ),
         ),
-        body: Padding(
+      ),
+      body: Consumer2<AppwriteCartProvider, LoginProvider>(
+        builder: (context, cartProvider, loginProvider, child) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: StreamBuilder(
-              stream: _firestore
-                  .collection('cart')
-                  .doc(firebaseUserNumber)
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                }
-                if (!snapshot.hasData || snapshot.data!.data() == null) {
-                  return const Text('No items in the cart.');
-                }
-                Map<String, dynamic> cartData =
-                    snapshot.data!.data() as Map<String, dynamic>;
-                List<dynamic> products = cartData['products'] ?? [];
-                return products.isEmpty
-                    ? Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Lottie.asset(
-                                  AnimationClass.noData,
-                                  height: 200,
-                                ),
-                                const SizedBox(height: 16),
-                                const Text(
-                                  "لا توجد نتائج",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+          child: loginProvider.isGuestLogin
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(ImageClass.loginIcon, height: 110),
+                      Text(
+                        "Ready to roll?\n Log in to make these cars yours",
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const SignInScreen();
+                              }), (route) => false);
+                            },
+                            child: const Text('Login')),
                       )
-                    : ListView.builder(
-                        itemCount: products.length,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Dismissible(
-                              key: Key(products[index]["id"].toString()),
-                              direction: DismissDirection.endToStart,
-                              onDismissed: (direction) {
-                                setState(() {
-                                  products.removeAt(index);
-                                });
-                                _firestore
-                                    .collection('cart')
-                                    .doc(firebaseUserNumber)
-                                    .update({
-                                  'products': products,
-                                });
-                              },
-                              background: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFFE6E6),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Spacer(),
-                                    SvgPicture.asset("assets/icons/Trash.svg"),
-                                  ],
-                                ),
+                    ],
+                  ),
+                )
+              : cartProvider.isAddtoCartLoading
+                  ? Center(
+                      child: LoadingAnimationWidget.horizontalRotatingDots(
+                        color: Colors.redAccent,
+                        size: 35,
+                      ),
+                    )
+                  : cartProvider.productList.isEmpty
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    ImageClass.toyCart,
+                                    height: 70,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    "Your cart is a toy car garage, \nfill it up with some speedy rides!",
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 15),
+                                  // start shopping button with dropshadow
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.red.withOpacity(0.5),
+                                          spreadRadius: 1,
+                                          blurRadius: 15,
+                                          offset: const Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, InitScreen.routeName);
+                                      },
+                                      child: const Text(
+                                        "Start Shopping",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      : ListView.builder(
+                          itemCount: cartProvider.productList.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF5F6F9),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 1),
+                                    blurRadius: 5,
+                                    color: const Color(0xFFD3D3D3)
+                                        .withOpacity(0.84),
+                                  ),
+                                ],
                               ),
                               child: Row(
                                 children: [
-                                  SizedBox(
-                                    width: 88,
-                                    child: AspectRatio(
-                                      aspectRatio: 0.88,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFF5F6F9),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: Image.network(
-                                            products[index]['image']),
-                                      ),
+                                  // product image with corner radius
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Image.network(
+                                      cartProvider.productList[index]
+                                          ['productImage'],
+                                      height: 100,
+                                      width: 100,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                   const SizedBox(width: 20),
@@ -135,40 +207,49 @@ class _CartScreenState extends State<CartScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          products[index]['name'],
+                                          cartProvider.productList[index]
+                                              ['productName'],
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 16),
+                                              fontSize: 14),
                                           maxLines: 2,
                                         ),
                                         const SizedBox(height: 8),
+                                        Text(
+                                          '${(cartProvider.productList[index]['price']) * cartProvider.productList[index]['quantity']}.00 AED',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                color: kPrimaryColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
                                         Row(
                                           children: [
                                             IconButton(
                                               icon: Container(
                                                   decoration: BoxDecoration(
-                                                    color: ColorClass.grayColor
-                                                        .withOpacity(0.3),
+                                                    color: Colors.grey
+                                                        .withOpacity(0.1),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            5),
+                                                            9),
                                                   ),
                                                   child: const Icon(Icons.add)),
                                               onPressed: () {
-                                                setState(() {
-                                                  products[index]['qty']++;
-                                                });
-                                                _firestore
-                                                    .collection('cart')
-                                                    .doc(firebaseUserNumber)
-                                                    .update({
-                                                  'products': products,
-                                                });
+                                                cartProvider
+                                                    .increamentProductQuantity(
+                                                        index,
+                                                        cartProvider
+                                                            .productList);
                                               },
                                             ),
                                             Text(
-                                              products[index]['qty'].toString(),
+                                              cartProvider.productList[index]
+                                                      ['quantity']
+                                                  .toString(),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium,
@@ -176,150 +257,129 @@ class _CartScreenState extends State<CartScreen> {
                                             IconButton(
                                               icon: Container(
                                                 decoration: BoxDecoration(
-                                                  color: ColorClass.grayColor
-                                                      .withOpacity(0.3),
+                                                  color: Colors.grey
+                                                      .withOpacity(0.1),
                                                   borderRadius:
-                                                      BorderRadius.circular(5),
+                                                      BorderRadius.circular(9),
                                                 ),
                                                 child: const Icon(
                                                   Icons.remove,
                                                 ),
                                               ),
                                               onPressed: () {
-                                                setState(() {
-                                                  if (products[index]['qty'] >
-                                                      1) {
-                                                    products[index]['qty']--;
-                                                  }
-                                                });
-                                                _firestore
-                                                    .collection('cart')
-                                                    .doc(firebaseUserNumber)
-                                                    .update({
-                                                  'products': products,
-                                                });
+                                                cartProvider
+                                                    .decrementProductQuantity(
+                                                        index,
+                                                        cartProvider
+                                                            .productList,
+                                                        context);
                                               },
-                                            )
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.remove_circle_outline,
+                                                color: Colors.grey[400],
+                                              ),
+                                              onPressed: () {
+                                                // show confirmation dialog
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Remove Item'),
+                                                      content: const Text(
+                                                          'Are you sure you want to remove this item from cart?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                            'Cancel',
+                                                            style: TextStyle(
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            cartProvider
+                                                                .removeProduct(
+                                                                    index);
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                            'Remove',
+                                                            style: TextStyle(
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
                                           ],
                                         )
                                       ],
                                     ),
                                   )
                                 ],
-                              )),
+                              ),
+                            ),
+                          ),
                         ),
-                      );
-              }),
         ),
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 20,
-          ),
-          // height: 174,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, -15),
-                blurRadius: 20,
-                color: const Color(0xFFDADADA).withOpacity(0.15),
-              )
-            ],
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF5F6F9),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: SvgPicture.asset("assets/icons/receipt.svg"),
-                    ),
-                    const Spacer(),
-                    const Text("Add voucher code"),
-                    const SizedBox(width: 8),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 12,
-                      color: kTextColor,
-                    )
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    // const Expanded(
-                    //   child: Text.rich(
-                    //     // TextSpan(
-                    //     //   text: "Total:\n",
-                    //     //   children: [
-                    //     //     TextSpan(
-                    //     //       text: "\$337.15",
-                    //     //       style: TextStyle(fontSize: 16, color: Colors.black),
-                    //     //     ),
-                    //     //   ],
-                    //     // ),
-                    //   ),
-                    // ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          DocumentSnapshot cartSnapshot = await _firestore
-                              .collection('cart')
-                              .doc(firebaseUserNumber)
-                              .get();
-                          List<dynamic> products = (cartSnapshot.data()
-                              as Map<String, dynamic>)['products'];
-
-                          DocumentSnapshot orderSnapshot = await _firestore
-                              .collection('orders')
-                              .doc(firebaseUserNumber)
-                              .get();
-
-                          if (orderSnapshot.exists) {
-                            // If order exists, append products to the existing order
-                            List<dynamic> existingProducts = (orderSnapshot
-                                .data() as Map<String, dynamic>)['products'];
-                            products.addAll(existingProducts);
-                          }
-
-// Set or update the order with the combined products
-                          await _firestore
-                              .collection('orders')
-                              .doc(firebaseUserNumber)
-                              .set({
-                            'products': products,
-                          });
-
-// Clear products from the cart
-                          await _firestore
-                              .collection('cart')
-                              .doc(firebaseUserNumber)
-                              .update({
-                            'products': [],
-                          });
-                        },
-                        child: const Text("Check Out"),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ));
+      ),
+      bottomNavigationBar:
+          Consumer3<AppwriteCartProvider, LoginProvider, AddressProvider>(
+              builder: (context, cartProvider, loginProvider, addressProvider,
+                      child) =>
+                  loginProvider.isGuestLogin || cartProvider.cartLength == 0
+                      ? const SizedBox()
+                      : Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 20,
+                          ),
+                          // height: 174,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, -15),
+                                blurRadius: 20,
+                                color:
+                                    const Color(0xFFDADADA).withOpacity(0.15),
+                              )
+                            ],
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const CheckOutScreen();
+                              }));
+                            },
+                            child: const Text(
+                              "Continue",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        )),
+    );
   }
 }

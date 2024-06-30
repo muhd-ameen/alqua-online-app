@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:alqua_online/utils/color_class.dart';
+import 'package:souq_alqua/utils/color_class.dart';
 
 const kPrimaryColor = ColorClass.kPrimaryColor;
+// font family
+const kFontFamily = 'Muli';
+// black color
+const kBlackColor = Color(0xFF393939);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
@@ -15,6 +19,7 @@ const kAnimationDuration = Duration(milliseconds: 200);
 
 const headingStyle = TextStyle(
   fontSize: 24,
+  fontFamily: kFontFamily,
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:alqua_online/utils/color_class.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -8,14 +6,29 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "صفقة فلاش"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "فاتورة"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "لعبة"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "هدية يومية"},
-      {"icon": "assets/icons/Discover.svg", "text": "أكثر"},
+      {
+        "icon":
+            "https://tse4.mm.bing.net/th/id/OIG3.XEuZFpYHoH2vNvNE1ad2?pid=ImgGn",
+        "text": "Classic"
+      },
+      {
+        "icon":
+            "https://tse3.mm.bing.net/th/id/OIG3.Y5ldf5zsB5F1bFlYIpiy?pid=ImgGn",
+        "text": "Sports"
+      },
+      {
+        "icon":
+            "https://tse1.mm.bing.net/th/id/OIG3.O2EvsY97e842Uw6yWFlq?pid=ImgGn",
+        "text": "Off-Road"
+      },
+      {
+        "icon":
+            "https://tse2.mm.bing.net/th/id/OIG3.M0ZMRl0xPzVg.1j6eQ_t?pid=ImgGn",
+        "text": "Fantasy"
+      },
     ];
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,21 +63,33 @@ class CategoryCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(16),
-            height: 56,
-            width: 56,
+            height: 55,
+            width: 55,
             decoration: BoxDecoration(
-              color: ColorClass.primaryGradientColor2.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(
+                      0.5), // You can set the color and opacity as per your preference
+                  spreadRadius: 2, // Spread radius
+                  blurRadius: 5, // Blur radius
+                  offset: const Offset(
+                      0, 3), // Offset to control the position of the shadow
+                ),
+              ],
             ),
-            child: SvgPicture.asset(
-              icon,
-              // ignore: deprecated_member_use
-              color: ColorClass.kPrimaryColor,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                icon,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(height: 6),
-          Text(text, textAlign: TextAlign.center)
+          Text(text,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall)
         ],
       ),
     );
