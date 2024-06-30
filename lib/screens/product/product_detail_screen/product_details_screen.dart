@@ -148,13 +148,13 @@ class ProductDetailsScreen extends StatelessWidget {
                         onPressed: () async {
                           try {
                             if (loginProvider.isGuestLogin) {
-                              FloatingSnackBar(
+                              floatingSnackBar(
                                   message: 'Please login to add to cart',
                                   context: context);
                             } else {
                               // Call the addToCart function
                               await awSnap.addToCart(product);
-                              FloatingSnackBar(
+                              floatingSnackBar(
                                   message: 'Added to cart', context: context);
                             }
                           } catch (error) {

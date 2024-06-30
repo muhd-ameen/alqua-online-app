@@ -122,7 +122,7 @@ class CountrySelection extends StatelessWidget {
               'Qatar 🇶🇦',
             ];
             if (countryList.isNotEmpty) {
-              FloatingSnackBar(
+              floatingSnackBar(
                   message: 'Currently we are only serving in UAE 🇦🇪',
                   context: context);
 
@@ -177,7 +177,7 @@ class CountrySelection extends StatelessWidget {
                                   // value.selectOrUpdateCountry(
                                   //   countryList[index],
                                   // );
-                                  FloatingSnackBar(
+                                  floatingSnackBar(
                                       message:
                                           'Currently we are only serving in UAE 🇦🇪',
                                       context: context);

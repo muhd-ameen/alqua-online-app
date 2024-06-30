@@ -83,7 +83,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           provider.addresses[index].userId,
                           provider.addresses[index].id)
                         ..then((value) {
-                          FloatingSnackBar(
+                          floatingSnackBar(
                               message:
                                   '${provider.addresses[index].addressName} set as default',
                               context: context);
@@ -235,7 +235,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             city.text.isEmpty ||
                             doorNo.text.isEmpty ||
                             phoneNumber.text.isEmpty) {
-                          FloatingSnackBar(
+                          floatingSnackBar(
                               message: 'All fields are required',
                               context: context);
 

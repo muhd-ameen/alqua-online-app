@@ -399,7 +399,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                                     ElevatedButton(
                                                       onPressed: () {
                                                         //  show snackbar as feature not implemented
-                                                        FloatingSnackBar(
+                                                        floatingSnackBar(
                                                             message:
                                                                 'Feature not available yet!',
                                                             context: context);
@@ -543,12 +543,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           onPressed: () async {
                             // check if the user is guest and default address is available
                             if (loginProvider.isGuestLogin) {
-                              FloatingSnackBar(
+                              floatingSnackBar(
                                   message: 'Please login to checkout!',
                                   context: context);
                               return;
                             } else if (addressProvider.defaultAddress == null) {
-                              FloatingSnackBar(
+                              floatingSnackBar(
                                   message: 'Please select a delivery address',
                                   context: context);
 
@@ -561,7 +561,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                     "${addressProvider.defaultAddress!.addressName}, ${addressProvider.defaultAddress!.doorNo}, ${addressProvider.defaultAddress!.street}, ${addressProvider.defaultAddress!.city}",
                                 context: context,
                               );
-                              FloatingSnackBar(
+                              floatingSnackBar(
                                   message: 'Order placed successfully!',
                                   context: context);
                             }

@@ -115,7 +115,7 @@ class AppwriteOrderProvider extends ChangeNotifier {
         AppwriteCartProvider cartProvider =
             Provider.of<AppwriteCartProvider>(context, listen: false);
         await cartProvider.reduceRewardPointOnOrder(context);
-        FloatingSnackBar(
+        floatingSnackBar(
             message: 'Order cancelled successfully', context: context);
       });
 

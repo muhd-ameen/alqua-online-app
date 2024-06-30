@@ -246,7 +246,7 @@ class LoginProvider extends ChangeNotifier {
       }), (route) => false);
     } catch (e) {
       // Handle errors here, for example:
-      FloatingSnackBar(
+      floatingSnackBar(
           message: "'Error deleting account: $e'", context: context);
     }
   }
