@@ -1,4 +1,3 @@
-import 'package:souq_alqua/screens/stories/stories_screen.dart';
 import 'package:souq_alqua/screens/home/screens/all_categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +31,6 @@ class _InitScreenState extends State<InitScreen> {
   void initState() {
     pages = [
       const HomeScreen(),
-      const StoriesScreen(),
       const AllCategoriesScreen(),
       const ProfileScreen()
     ];
@@ -46,9 +44,7 @@ class _InitScreenState extends State<InitScreen> {
       child: Scaffold(
         body: pages[currentSelectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: pages[currentSelectedIndex] is StoriesScreen
-              ? Colors.black
-              : Colors.white,
+          backgroundColor: Colors.white,
           onTap: updateCurrentIndex,
           currentIndex: currentSelectedIndex,
           showSelectedLabels: false,
@@ -71,23 +67,6 @@ class _InitScreenState extends State<InitScreen> {
                 ),
               ),
               label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/icons/Gift Icon.svg",
-                colorFilter: const ColorFilter.mode(
-                  inActiveIconColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-              activeIcon: SvgPicture.asset(
-                "assets/icons/Gift Icon.svg",
-                colorFilter: const ColorFilter.mode(
-                  kPrimaryColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-              label: "Stories",
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(

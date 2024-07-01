@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              ImageClass.tcsLogo,
+              ImageClass.appIcon,
               height: 150,
             ),
             LoadingAnimationWidget.horizontalRotatingDots(

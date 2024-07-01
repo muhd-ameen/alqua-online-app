@@ -2,7 +2,6 @@ import 'package:appwrite/appwrite.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:souq_alqua/helper/db_helper.dart';
 import 'package:souq_alqua/screens/authentication/splash/splash_screen.dart';
-import 'package:souq_alqua/screens/stories/provider/blog_provider.dart';
 import 'package:souq_alqua/screens/cart/providers/appwrite_cart_provider.dart';
 import 'package:souq_alqua/screens/order_screens/delivery_locations/providers/delivery_location_provider.dart';
 import 'package:souq_alqua/screens/order_screens/orders/providers/appwrite_order_provider.dart';
@@ -64,7 +63,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => AppwriteCartProvider()),
-        ChangeNotifierProvider(create: (_) => BlogPostProvider()),
         ChangeNotifierProvider(create: (_) => AppwriteOrderProvider(client)),
         ChangeNotifierProvider(create: (_) => AddressProvider(client)),
       ],

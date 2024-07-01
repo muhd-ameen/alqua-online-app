@@ -74,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: const CountrySelection(),
         centerTitle: true,
         title: Image.asset(
-          ImageClass.tcsLogo,
-          height: 100,
+          ImageClass.appIcon,
+          height: 55,
         ),
       ),
       body: SafeArea(

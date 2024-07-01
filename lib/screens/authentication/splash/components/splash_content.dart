@@ -24,8 +24,8 @@ class _SplashContentState extends State<SplashContent> {
           height: 10,
         ),
         Image.asset(
-          ImageClass.tcsLogo,
-          height: 100,
+          ImageClass.appIcon,
+          height: 55,
         ),
         const SizedBox(
           height: 10,

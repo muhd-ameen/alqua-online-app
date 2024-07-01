@@ -1,7 +1,7 @@
 class ImageClass {
   static const String imageRoot = 'assets/images/';
   static const String tcsLogo = '${imageRoot}tcs-logo.png';
-  static const String appIcon = '${imageRoot}app-logo.jpg';
+  static const String appIcon = '${imageRoot}app-logo.png';
   static const String googleLogo = '${imageRoot}google-logo.png';
   static const String uaeFLag = '${imageRoot}uae-flag.jpeg';
   static const String trackingIcon = '${imageRoot}tracking.png';

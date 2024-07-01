@@ -16,7 +16,7 @@ class TopSellingProducts extends StatelessWidget {
         return Visibility(
           visible: productsProvider.topSellingProduct.isNotEmpty,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Column(
               children: [
                 const Padding(
@@ -35,39 +35,35 @@ class TopSellingProducts extends StatelessWidget {
                         color: Colors.redAccent,
                         size: 30,
                       ))
-                    : SingleChildScrollView(
-                        padding: const EdgeInsets.only(left: 20),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ...List.generate(
-                                productsProvider.topSellingProduct.length > 15
-                                    ? 15
-                                    : productsProvider.topSellingProduct.length,
-                                (index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: DynamicProductCard(
-                                  product:
-                                      productsProvider.topSellingProduct[index],
-                                  onPress: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ProductDetailsScreen(
-                                            product: productsProvider
-                                                .topSellingProduct[index],
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              );
-                            }),
-                            const SizedBox(width: 20),
-                          ],
-                        )),
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.29,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          itemCount:
+                              productsProvider.topSellingProduct.length > 20
+                                  ? 20
+                                  : productsProvider.topSellingProduct.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: DynamicProductCard(
+                              product:
+                                  productsProvider.topSellingProduct[index],
+                              onPress: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProductDetailsScreen(
+                                        product: productsProvider
+                                            .topSellingProduct[index],
+                                      ),
+                                    ));
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),
