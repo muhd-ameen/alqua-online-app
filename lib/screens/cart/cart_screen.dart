@@ -124,8 +124,10 @@ class _CartScreenState extends State<CartScreen> {
                                     height: 70,
                                   ),
                                   const SizedBox(height: 10),
+                                  //empty cart
+
                                   Text(
-                                    "Your cart is a toy car garage, \nfill it up with some speedy rides!",
+                                    "سلة التسوق فاضية، \nأضف بعض الأدوات التقنية الرائعة!",
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                     textAlign: TextAlign.center,
